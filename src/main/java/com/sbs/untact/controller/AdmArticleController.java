@@ -15,8 +15,10 @@ import org.springframework.web.multipart.MultipartRequest;
 
 import com.sbs.untact.dto.Article;
 import com.sbs.untact.dto.Board;
+import com.sbs.untact.dto.GenFile;
 import com.sbs.untact.dto.ResultData;
 import com.sbs.untact.service.ArticleService;
+import com.sbs.untact.service.GenFileService;
 import com.sbs.untact.util.Util;
 
 
@@ -24,22 +26,34 @@ import com.sbs.untact.util.Util;
 public class AdmArticleController extends BaseController {
 	@Autowired
 	private ArticleService articleService;
-	
+	@Autowired
+	private GenFileService genFileService;
 
 	@RequestMapping("/adm/article/detail")
-	@ResponseBody
-	public ResultData showDetail(Integer id) {
+	public String showDetail(HttpServletRequest req, Integer id) {
 		if (id == null) {
-			return new ResultData("F-1", "id를 입력해주세요.");
+			return msgAndBack(req, "id를 입력해주세요.");
 		}
 
 		Article article = articleService.getForPrintArticle(id);
 
+		List<GenFile> files = genFileService.getGenFiles("article", article.getId(), "common", "attachment");
+		
+		Map<String, Object> filesMap = new HashMap<>();
+		
+		for (GenFile file : files) {
+			filesMap.put(file.getFileNo() + "", file);
+			
+		}
+		
+		article.getExtraNotNull().put("file__common__attachment", filesMap);
+		req.setAttribute("article", article);
+		
 		if (article == null) {
-			return new ResultData("F-2", "존재하지 않는 게시물번호 입니다.");
+			return msgAndBack(req, "존재하지 않는 게시물번호 입니다.");
 		}
 
-		return new ResultData("S-1", "성공", "article", article);
+		return "adm/article/detail";
 	}
 
 	@RequestMapping("/adm/article/list")
@@ -185,7 +199,15 @@ public class AdmArticleController extends BaseController {
 
 		Article article = articleService.getForPrintArticle(id);
 
-		
+		List<GenFile> files = genFileService.getGenFiles("article", article.getId(), "common", "attachment");
+
+		Map<String, GenFile> filesMap = new HashMap<>();
+
+		for (GenFile file : files) {
+			filesMap.put(file.getFileNo() + "", file);
+		}
+
+		article.getExtraNotNull().put("file__common__attachment", filesMap);
 		req.setAttribute("article", article);
 
 		if (article == null) {

@@ -91,7 +91,7 @@ function MemberModify__checkAndSubmit(form) {
 		<form onsubmit="MemberModify__checkAndSubmit(this); return false;" 
 			action="doModify" method="POST">
 			<input type="hidden" name="id" value="${member.id}" />
-			<div class="form-row flex flex-col lg:flex-row">
+			<div class="flex flex-col mb-4 md:flex-row">
 				<div class="lg:flex lg:items-center lg:w-28">
 					<span>로그인아이디</span>
 				</div>
@@ -100,7 +100,7 @@ function MemberModify__checkAndSubmit(form) {
 				</div>
 			</div>
 			
-			<div class="form-row flex flex-col lg:flex-row">
+			<div class="flex flex-col mb-4 md:flex-row">
 				<div class="lg:flex lg:items-center lg:w-28">
 					<span>로그인비밀번호</span>
 				</div>
@@ -109,7 +109,7 @@ function MemberModify__checkAndSubmit(form) {
 						class="form-row-input w-full rounded-sm" placeholder="로그인 비밀번호을 입력해주세요." />
 				</div>
 			</div>
-			<div class="form-row flex flex-col lg:flex-row">
+			<div class="flex flex-col mb-4 md:flex-row">
 				<div class="lg:flex lg:items-center lg:w-28">
 					<span>로그인비밀번호 확인</span>
 				</div>
@@ -118,7 +118,19 @@ function MemberModify__checkAndSubmit(form) {
 						class="form-row-input w-full rounded-sm" placeholder="로그인 비밀번호을 입력해주세요." />
 				</div>
 			</div>
-			<div class="form-row flex flex-col lg:flex-row">
+			
+			<div class="flex flex-col mb-4 md:flex-row">
+					<div class="lg:flex lg:items-center lg:w-28">
+						<span>프로필 이미지</span>
+					</div>
+					<div class="lg:flex-grow">
+						<input accept="image/gif, image/jpeg, image/png"
+							class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+							autofocus="autofocus" type="file" placeholder="프로필이미지를 선택해주세요."
+							name="file__member__0__common__attachment__1" maxlength="20" />
+					</div>
+				</div>
+			<div class="flex flex-col mb-4 md:flex-row">
 				<div class="lg:flex lg:items-center lg:w-28">
 					<span>이름</span>
 				</div>
@@ -127,7 +139,7 @@ function MemberModify__checkAndSubmit(form) {
 						class="form-row-input w-full rounded-sm" placeholder="이름을 입력해주세요." />
 				</div>
 			</div>
-			<div class="form-row flex flex-col lg:flex-row">
+			<div class="flex flex-col mb-4 md:flex-row">
 				<div class="lg:flex lg:items-center lg:w-28">
 					<span>닉네임</span>
 				</div>
@@ -136,7 +148,7 @@ function MemberModify__checkAndSubmit(form) {
 						class="form-row-input w-full rounded-sm" placeholder="닉네임을 입력해주세요." />
 				</div>
 			</div>
-			<div class="form-row flex flex-col lg:flex-row">
+			<div class="flex flex-col mb-4 md:flex-row">
 				<div class="lg:flex lg:items-center lg:w-28">
 					<span>이메일</span>
 				</div>
@@ -145,7 +157,7 @@ function MemberModify__checkAndSubmit(form) {
 						class="form-row-input w-full rounded-sm" placeholder="이메일을 입력해주세요." />
 				</div>
 			</div>
-			<div class="form-row flex flex-col lg:flex-row">
+			<div class="flex flex-col mb-4 md:flex-row">
 				<div class="lg:flex lg:items-center lg:w-28">
 					<span>핸드폰 번호</span>
 				</div>
@@ -154,7 +166,7 @@ function MemberModify__checkAndSubmit(form) {
 						class="form-row-input w-full rounded-sm" placeholder="핸드폰 번호를 입력해주세요." />
 				</div>
 			</div>
-			<div class="form-row flex flex-col lg:flex-row">
+			<div class="flex flex-col mb-4 md:flex-row">
 				<div class="lg:flex lg:items-center lg:w-28">
 					<span>권한레벨</span>
 				</div>

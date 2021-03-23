@@ -38,10 +38,7 @@ public interface ArticleDao {
 
 	void modifyArticle(Map<String, Object> param);
 	
-	List<Board> getForPrintBoards(@Param("boardId") int boardId,
-			@Param("searchKeywordType") String searchKeywordType,
-			@Param("searchKeyword") String searchKeyword, @Param("limitStart") int limitStart,
-			@Param("limitTake") int limitTake);
+
 
 	int getArticlesTotalCount(@Param("boardId") int boardId,
 			@Param("searchKeywordType") String searchKeywordType,

@@ -1,56 +1,36 @@
 package com.sbs.untact.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sbs.untact.dto.Board;
-import com.sbs.untact.service.ArticleService;
+import com.sbs.untact.dto.ResultData;
+import com.sbs.untact.service.BoardService;
 
 public class AdmBoardController extends BaseController{
 	@Autowired
-	private ArticleService articleService;
+	private BoardService boardService;
+	
+	@RequestMapping("/adm/board/detail")
+
+	public String showDetail(HttpServletRequest req, Integer id) {
+		Board boards = boardService.getForPrintBoard(id);
+
+		req.setAttribute("boards", boards);
+
+		return "adm/board/detail";
+	}
 	
 	@RequestMapping("/adm/board/list")
-	public String showList(HttpServletRequest req,  @RequestParam(defaultValue = "1") int boardId,
-			String searchKeywordType, String searchKeyword, @RequestParam(defaultValue = "1") int page) {
+	public String showList(HttpServletRequest req) {
 
-		Board board = articleService.getBoard(boardId);
-
-		req.setAttribute("board", board);
-
-		if (board == null) {
-			return msgAndBack(req, "존재하지 않는 게시판 입니다.");
-		}
-
-		if (searchKeywordType != null) {
-			searchKeywordType = searchKeywordType.trim();
-		}
-
-		if (searchKeywordType == null || searchKeywordType.length() == 0) {
-			searchKeywordType = "codeAndName";
-		}
-
-		if (searchKeyword != null && searchKeyword.length() == 0) {
-			searchKeyword = null;
-		}
-
-		if (searchKeyword != null) {
-			searchKeyword = searchKeyword.trim();
-		}
-
-		if (searchKeyword == null) {
-			searchKeyword = null;
-		}
-
-		int itemsInAPage = 20;
-
-		List<Board> boards = articleService.getForPrintBoards(boardId, page, itemsInAPage, searchKeywordType, searchKeyword);
+		List<Board> boards = boardService.getForPrintBoards();
 
 		req.setAttribute("boards", boards);
 

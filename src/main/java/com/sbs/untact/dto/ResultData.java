@@ -19,6 +19,8 @@ public class ResultData {
 		this.body = Util.mapOf(args);
 	}
 	
+
+
 	public boolean isSuccess() {
 		return resultCode.startsWith("S-");
 	}

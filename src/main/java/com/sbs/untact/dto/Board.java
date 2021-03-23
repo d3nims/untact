@@ -13,8 +13,7 @@ public class Board {
 	private int id;
 	private String regDate;
 	private String updateDate;
-	private String boardId;
 	private String code;
 	private String name;
-
+	
 }
