@@ -17,21 +17,9 @@
 </select>
 
 <select id="getForPrintBoards" resultType="Board">
-		SELECT B.*
-		FROM board AS B
-		WHERE 1
+		SELECT *
+		FROM board 
 
-		<if test="searchKeywordType == 'code'">
-			AND B.code LIKE CONCAT('%', #{searchKeyword}, '%')
-		</if>
-		<if test="searchKeywordType == 'name'">
-			AND B.name LIKE CONCAT('%', #{searchKeyword}, '%')
-		</if>
-		<if test="searchKeywordType == 'codeAndName'">
-			AND (B.code LIKE CONCAT('%', #{searchKeyword}, '%') OR
-			B.name LIKE CONCAT('%', #{searchKeyword}, '%'))
-		</if>
-		ORDER BY B.id DESC
-	</select>
+</select>
 	
 </mapper>

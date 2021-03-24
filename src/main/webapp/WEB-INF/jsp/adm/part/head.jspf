@@ -18,6 +18,9 @@
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.0.3/tailwind.min.css">
 
+<!-- daisyui 불러오기 -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daisyui@0.14.4/dist/full.css">
+
 <!-- 폰트어썸 불러오기 -->
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">

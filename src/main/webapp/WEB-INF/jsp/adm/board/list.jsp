@@ -5,31 +5,30 @@
 
 <%@ include file="../part/mainLayoutHead.jspf"%>
 
-<script>
-	param.boardId = parseInt("${board.id}");
-</script>
 
 <section class="section-1">
 	<div class="bg-white shadow-md rounded container mx-auto p-8 mt-8">
 		<c:forEach items="${boards}" var="boards">
-			<div>
-				${board.id}
+			<c:set var="detailUrl" value="detail?id=${board.id }" />
+			<div class=flex items-center mt-10>
+				<a href="${detailUrl}" class="font-bold">NO. ${board.id}</a>
+				<a href="${detailUrl}" class="ml-2 font-light text-gray-600">${board.regDate}</a>
 			</div>
+			<div class="mt-2">
+				<a href="${detailUrl}" class="text-2xl text-gray-700 font-bold hover:underline">${board.code}</a>
+				<c:if test="${thumbUrl != null}">
+					<a class="block" href="${detailUrl}">
+						<img class="max-w-sm" src="${thumbUrl}" alt="" />
+					</a>
+				</c:if>
+					<a href="${detailUrl}" class="mt-2 text-gray-600 block">${board.name}</a>
+			</div>
+				<div class="flex items-center mt-4">
+					<a href="detail?id=${board.id}" class="text-blue-500 hover:underline">자세히 보기</a>
+				</div>
 		</c:forEach>
 	</div>
-	<div class="flex items-center mt-4">
-		<a href="detail?id=${board.id}" class="text-blue-500 hover:underline">자세히 보기</a>
-		<a href="modify?id=${board.id}" class="ml-2 text-blue-500 hover:underline">수정</a>
-		<a onclick="if ( !confirm('삭제하시겠습니까?') ) return false;" href="doDelete?id=${board.id}" class="ml-2 text-blue-500 hover:underline">삭제</a>
-		<div class="flex-grow"></div>
-		<div>
-			<a class="flex items-center">
-							
-				<img src="https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=731&amp;q=80" alt="avatar" class="mx-4 w-10 h-10 object-cover rounded-full">
-							
-			</a>
-		</div>
-	</div>
+	
 </section>
 
 <%@ include file="../part/mainLayoutFoot.jspf"%>

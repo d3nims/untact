@@ -26,7 +26,7 @@
 			<div class="flex-grow"></div>
 
 			
-			<a href="add?boardId=${board.id}" class="btn-primary bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded">글쓰기</a>
+			<a href="add?boardId=${board.id}" class="btn-primary bg-green-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded">글쓰기</a>
 		</div>
 		
 
@@ -63,7 +63,6 @@
 					<a href="list?boardId=${article.boardId}" class="px-2 py-1 bg-gray-600 text-gray-100 font-bold rounded hover:bg-gray-500">${article.extra__boardName}</a>
 				</div>
 				<div class="mt-2">
-					
 					<a href="${detailUrl}" class="text-2xl text-gray-700 font-bold hover:underline">${article.title}</a>
 					<c:if test="${thumbUrl != null}">
 
