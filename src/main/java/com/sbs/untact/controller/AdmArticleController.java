@@ -221,7 +221,7 @@ public class AdmArticleController extends BaseController {
 	@RequestMapping("/adm/article/doModify")
 	@ResponseBody
 	public ResultData doModify(@RequestParam Map<String, Object> param, HttpServletRequest req) {
-		Member loginedMemberId = (Member) req.getAttribute("loginedMemberId");
+		Member loginedMemberId = (Member) req.getAttribute("loginedMember");
 		
 		int id = Util.getAsInt(param.get("id"), 0);
 
