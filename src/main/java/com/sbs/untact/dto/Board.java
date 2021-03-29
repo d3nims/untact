@@ -8,12 +8,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class Board {
+public class Board extends EntityDto {
 	
 	private int id;
 	private String regDate;
 	private String updateDate;
+	private int memberId;
+	private int boardId;
 	private String code;
 	private String name;
+	
+	private String extra__boardName;
 	
 }

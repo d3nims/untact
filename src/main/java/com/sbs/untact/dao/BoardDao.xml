@@ -16,10 +16,70 @@
 		WHERE id = #{id}
 </select>
 
+<select id="getBoardsTotalCount" resultType="int">
+		SELECT COUNT(*)
+		FROM board AS
+		B
+		WHERE 1
+
+		<if test="searchKeywordType == 'name'">
+			AND B.name LIKE CONCAT('%', #{searchKeyword}, '%')
+		</if>
+		<if test="searchKeywordType == 'code'">
+			AND B.code LIKE CONCAT('%', #{searchKeyword}, '%')
+		</if>
+		<if test="searchKeywordType == 'nameAndCode'">
+			AND (B.name LIKE CONCAT('%', #{searchKeyword}, '%') OR
+			B.code LIKE CONCAT('%', #{searchKeyword}, '%'))
+		</if>
+		
+</select>
+	
 <select id="getForPrintBoards" resultType="Board">
 		SELECT *
-		FROM board 
-
+		FROM board
+		WHERE 1
+		
+		<if test="searchKeywordType == 'name'">
+			AND name LIKE CONCAT('%', #{searchKeyword}, '%')
+		</if>
+		<if test="searchKeywordType == 'code'">
+			AND code LIKE CONCAT('%', #{searchKeyword}, '%')
+		</if>
+		ORDER BY id DESC
 </select>
+
+<insert id="addBoard" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO board
+		SET regDate = NOW(),
+		updateDate = NOW(),
+		name = #{name},
+		code = #{code}
+		
+		
+</insert>
+
+<delete id="deleteBoard">
+		DELETE FROM board
+		WHERE id = #{id}
+</delete>
+
+<update id="modifyBoard">
+		UPDATE board
+		<set>
+			<if test="code != null or name != null">
+				updateDate = NOW(),
+			</if>
+			<if test="code != null">
+				code = #{code},
+			</if>
+			<if test="name != null">
+				name = #{name}
+			</if>
+		</set>
+		WHERE id = #{id}
+</update>
+
+
 	
 </mapper>

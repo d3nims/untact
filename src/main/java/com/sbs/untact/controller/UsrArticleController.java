@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sbs.untact.dto.Article;
 import com.sbs.untact.dto.Board;
+import com.sbs.untact.dto.Member;
 import com.sbs.untact.dto.ResultData;
 import com.sbs.untact.service.ArticleService;
+import com.sbs.untact.util.Util;
 
 
 @Controller
@@ -120,8 +122,7 @@ public class UsrArticleController {
 	@PostMapping("/usr/article/doDelete")
 	@ResponseBody
 	public ResultData doDelete(Integer id, HttpServletRequest req) {
-		int loginedMemberId = (int)req.getAttribute("loginedMemberId");
-
+		Member loginedMember = (Member)req.getAttribute("loginedMember");
 
 		if (id == null) {
 			return new ResultData("F-1", "id를 입력해주세요.");
@@ -132,34 +133,32 @@ public class UsrArticleController {
 		if (article == null) {
 			return new ResultData("F-1", "해당 게시물은 존재하지 않습니다.");
 		}
-		
-		ResultData actorCanDeleteRd = articleService.getActorCanDeleteRd(article, loginedMemberId);
 
-		if ( actorCanDeleteRd.isFail() ) {
+		ResultData actorCanDeleteRd = articleService.getActorCanDeleteRd(article, loginedMember);
+
+		if (actorCanDeleteRd.isFail()) {
 			return actorCanDeleteRd;
 		}
-
-		
-
 
 		return articleService.deleteArticle(id);
 	}
 
 	@PostMapping("/usr/article/doModify")
 	@ResponseBody
-	public ResultData doModify(Integer id, String title, String body, HttpServletRequest req) {
-		int loginedMemberId = (int)req.getAttribute("loginedMemberId");
+	public ResultData doModify(@RequestParam Map<String, Object> param, HttpServletRequest req) {
+		Member loginedMember = (Member)req.getAttribute("loginedMember");
+		
+		int id = Util.getAsInt(param.get("id"), 0);
 
-
-		if (id == null) {
+		if ( id == 0 ) {
 			return new ResultData("F-1", "id를 입력해주세요.");
 		}
 
-		if (title == null) {
+		if ( Util.isEmpty(param.get("title")) ) {
 			return new ResultData("F-1", "title을 입력해주세요.");
 		}
 
-		if (body == null) {
+		if ( Util.isEmpty(param.get("body")) ) {
 			return new ResultData("F-1", "body를 입력해주세요.");
 		}
 
@@ -169,14 +168,13 @@ public class UsrArticleController {
 			return new ResultData("F-1", "해당 게시물은 존재하지 않습니다.");
 		}
 
-		ResultData actorCanModifyRd = articleService.getActorCanModifyRd(article, loginedMemberId);
+		ResultData actorCanModifyRd = articleService.getActorCanModifyRd(article, loginedMember);
 
-		if ( actorCanModifyRd.isFail() ) {
+		if (actorCanModifyRd.isFail()) {
 			return actorCanModifyRd;
 		}
 
-
-		return articleService.modifyArticle(id, title, body);
+		return articleService.modifyArticle(param);
 	}
 }
 
