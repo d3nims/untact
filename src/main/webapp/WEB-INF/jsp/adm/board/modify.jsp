@@ -8,12 +8,6 @@
 
 <script>
 BoardModify__submited = false;
-function BoardModify__checkAndSubmit(form) {
-	if ( BoardModify__submited ) {
-		alert('처리중입니다.');
-		return;
-	}
-	
 	form.name.value = form.name.value.trim();
 
 	if ( form.name.value.length == 0 ) {
@@ -39,7 +33,7 @@ function BoardModify__checkAndSubmit(form) {
 
 <section class="section-1">
 	<div class="bg-white shadow-md rounded container mx-auto p-8 mt-8">
-		<form onsubmit="ArticleModify__checkAndSubmit(this); return false;" action="doModify" method="POST" enctype="multipart/form-data">
+		<form onsubmit="BoardModify__checkAndSubmit(this); return false;" action="doModify" method="POST" enctype="multipart/form-data">
 			<input type="hidden" name="id" value="${board.id}" />
 			<div class="form-row flex flex-col lg:flex-row">
 				<div class="lg:flex lg:items-center lg:w-28">
@@ -47,29 +41,18 @@ function BoardModify__checkAndSubmit(form) {
 				</div>
 				<div class="lg:flex-grow">
 					<input value="${board.name}" type="text" name="name" autofocus="autofocus"
-						class="form-row-input w-full rounded-sm" placeholder="게시판 제목을 입력해주세요." />
+						class="form-row-input w-full rounded-sm" placeholder="게시판 이름을 입력해주세요." />
 				</div>
 			</div>
 			<div class="form-row flex flex-col lg:flex-row">
 				<div class="lg:flex lg:items-center lg:w-28">
 					<span>게시판 코드</span>
-					<select class="py-2 select-board-id">
-						<option value="1">공지사항</option>
-						<option value="2">자유게시판</option>
-					</select>
-					<script>
-						$('.section-1 .select-board-id').val(param.boardId);
-						$('.section-1 .select-board-id').change(function() {
-							location.href = '?boardId=' + this.value;
-						});
-
-					</script>
 				</div>
 				<div class="lg:flex-grow">
-					<textarea name="text" class="form-row-input w-full rounded-sm" placeholder="내용을 입력해주세요.">${board.code}</textarea>
+					<input value="${board.code}" type="text" name="code" autofocus="autofocus"
+						class="form-row-input w-full rounded-sm" placeholder="게시판 코드를 입력해주세요." />
 				</div>
 			</div>
-				<span>삭제</span>
 			<div class="form-row flex flex-col lg:flex-row">
 				<div class="lg:flex lg:items-center lg:w-28">
 					<span>수정</span>

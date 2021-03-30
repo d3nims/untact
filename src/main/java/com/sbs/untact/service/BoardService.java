@@ -71,6 +71,13 @@ public class BoardService {
 		
 		return new ResultData("S-1", "게시판을 수정하였습니다.", "id", id);
 	}
+	
+	
+	public ResultData modifyBoard(int id, String name, String code) {
+		boardDao.modifyBoard(id, name, code);
+
+		return new ResultData("S-1", "게시판을 수정하였습니다.", "id", id);
+	}
 
 	public int getBoardsTotalCount(int boardId, String searchKeywordType, String searchKeyword) {
 		return boardDao.getBoardsTotalCount(boardId, searchKeywordType, searchKeyword);
@@ -84,8 +91,12 @@ public class BoardService {
 		int id = Util.getAsInt(param.get("id"), 0);
 		
 		return new ResultData("S-1", "성공하였습니다.", "id", id);
+			
+	}
+
+	public Board getBoardBync(String name, String code) {
 		
-				
+		return boardDao.getBoardBync(name,code);
 	}
 
 	

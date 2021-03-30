@@ -15,8 +15,9 @@ public class Board extends EntityDto {
 	private String updateDate;
 	private int memberId;
 	private int boardId;
-	private String code;
 	private String name;
+	private String code;
+	
 	
 	private String extra__boardName;
 	

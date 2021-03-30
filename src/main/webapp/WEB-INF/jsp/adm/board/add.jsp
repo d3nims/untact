@@ -34,7 +34,6 @@ function BoardAdd__checkAndSubmit(form) {
 }
 
 
-	}
 
 	BoardAdd__submited = true;
 
@@ -43,7 +42,7 @@ function BoardAdd__checkAndSubmit(form) {
 
 <section class="section-1">
 	<div class="bg-white shadow-md rounded container mx-auto p-8 mt-8">
-		<form onsubmit="ArticleAdd__checkAndSubmit(this); return false;" action="doAdd" method="POST" enctype="multipart/form-data">
+		<form onsubmit="BoardAdd__checkAndSubmit(this); return false;" action="doAdd" method="POST" enctype="multipart/form-data">
 			<input type="hidden" name="boardId" value="${param.boardId}" />
 			<div class="form-row flex flex-col lg:flex-row">
 				<div class="lg:flex lg:items-center lg:w-28">

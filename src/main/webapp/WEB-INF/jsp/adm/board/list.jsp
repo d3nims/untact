@@ -18,6 +18,10 @@
 			<a href="add?boardId=${board.id}" class="btn-primary bg-green-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded">게시판 생성</a>
 		</div>
 		
+		<div class="container mx-auto h-full flex">
+				<a class="text-4xl text-gray-700 font-bold">게시판 관리</a>
+		</div>
+		
 		<form class="flex mt-3">
 			<select name="searchKeywordType">
 				<option value="nameAndCode">전체</option>
@@ -68,7 +72,6 @@
 			<c:if test="${pageMenuStart != 1}">
 				<a href="${Util.getNewUrl(requestUrl, 'page', 1)}" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
 					<span class="sr-only">Previous</span>
-	
 					<i class="fas fa-chevron-left"></i>
 				</a>
 			</c:if>

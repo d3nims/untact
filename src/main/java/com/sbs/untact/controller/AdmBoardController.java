@@ -165,13 +165,14 @@ public class AdmBoardController extends BaseController{
 			return msgAndBack(req, "존재하지 않는 게시판번호 입니다.");
 		}
 
-		return "adm/article/modify";
+		return "adm/board/modify";
 	}
 	
 	@RequestMapping("/adm/board/doModify")
 	@ResponseBody
-	public ResultData doModify(@RequestParam Map<String, Object> param, HttpServletRequest req) {
-		Member loginedMemberId = (Member) req.getAttribute("loginedMemberId");
+	public ResultData doModify(@RequestParam Map<String, Object> param, HttpServletRequest req,
+			String name, String code) {
+		Member loginedMemberId = (Member) req.getAttribute("loginedMember");
 		
 		int id = Util.getAsInt(param.get("id"), 0);
 
@@ -188,22 +189,27 @@ public class AdmBoardController extends BaseController{
 		}
 
 		Board board = boardService.getBoard(id);
+		
+		Board existingBoard = boardService.getBoardBync("name","code");
 
 		if (board == null) {
-			return new ResultData("F-1", "해당 게시핀은 존재하지 않습니다.");
+			return new ResultData("F-1", "해당 게시판은 존재하지 않습니다.");
 		}
+		
+		if (existingBoard != null) {
+			return new ResultData("F-2",String.format("%s(은)는 이미 사용중인 게시판이름 입니다.", name));
+		}
+		
 
 		ResultData actorCanModifyRd = boardService.getActorCanModifyRd(board, loginedMemberId);
 
 		if (actorCanModifyRd.isFail()) {
 			return actorCanModifyRd;
 		}
+		
+		
 
 		return boardService.modifyBoard(param);
 	}
-	
-	
-	
-	
 	
 }

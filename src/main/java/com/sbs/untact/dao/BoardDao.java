@@ -23,6 +23,9 @@ public interface BoardDao {
 
 		void deleteBoard(@Param("id")int id);
 		
+		void modifyBoard(@Param("id")int id, @Param(value = "name") String name,
+				@Param(value = "code") String code);
+		
 		void modifyBoard(Map<String, Object> param);
 
 		int getBoardsTotalCount(@Param("boardId") int boardId,
@@ -30,5 +33,9 @@ public interface BoardDao {
 			@Param("searchKeyword") String searchKeyword);
 
 		void addBoard(Map<String, Object> param);
+
+		Board getBoardBync(@Param ("name") String name, @Param ("code") String code);
+
+
 }
 

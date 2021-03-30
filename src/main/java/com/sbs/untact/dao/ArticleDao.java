@@ -21,6 +21,8 @@ public interface ArticleDao {
 	void modifyArticle(@Param("id")int id, @Param(value = "title") String title,
 			@Param(value = "body") String body);
 	
+	void modifyArticle(Map<String, Object> param);
+	
 	List<Article> getArticles(@Param("searchKeywordType") String searchKeywordType,
 			@Param("searchKeyword") String searchKeyword);
 
@@ -36,7 +38,7 @@ public interface ArticleDao {
 
 	void addReply(Map<String, Object> param);
 
-	void modifyArticle(Map<String, Object> param);
+	
 	
 
 
