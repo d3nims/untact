@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -32,7 +33,6 @@ public class AdmBoardController extends BaseController{
 	
 	
 	@RequestMapping("/adm/board/detail")
-
 	public String showDetail(HttpServletRequest req, Integer id) {
 		Board boards = boardService.getForPrintBoard(id);
 
@@ -171,26 +171,20 @@ public class AdmBoardController extends BaseController{
 	@RequestMapping("/adm/board/doModify")
 	@ResponseBody
 	public ResultData doModify(@RequestParam Map<String, Object> param, HttpServletRequest req,
-			String name, String code) {
+			String name) {
 		Member loginedMemberId = (Member) req.getAttribute("loginedMember");
 		
 		int id = Util.getAsInt(param.get("id"), 0);
 
-		if ( id == 0 ) {
-			return new ResultData("F-1", "id를 입력해주세요.");
-		}
 
 		if ( Util.isEmpty(param.get("name")) ) {
 			return new ResultData("F-1", "name을 입력해주세요.");
 		}
 
-		if ( Util.isEmpty(param.get("code")) ) {
-			return new ResultData("F-1", "code를 입력해주세요.");
-		}
 
 		Board board = boardService.getBoard(id);
 		
-		Board existingBoard = boardService.getBoardBync("name","code");
+		Board existingBoard = boardService.getBoardByName(name);
 
 		if (board == null) {
 			return new ResultData("F-1", "해당 게시판은 존재하지 않습니다.");

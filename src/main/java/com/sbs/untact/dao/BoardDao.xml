@@ -49,7 +49,7 @@
 		ORDER BY id DESC
 </select>
 
-<select id="getBoardBync" resultType="Board">
+<select id="getBoardByName" resultType="Board">
 		SELECT *
 		FROM board
 		WHERE

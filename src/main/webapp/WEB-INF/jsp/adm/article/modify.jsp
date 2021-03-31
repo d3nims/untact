@@ -146,7 +146,7 @@ function ArticleModify__checkAndSubmit(form) {
 			<c:forEach begin="1" end="${fileInputMaxCount}" var="inputNo">
 				<c:set var="fileNo" value="${String.valueOf(inputNo)}" />
                 <c:set var="file" value="${article.extra.file__common__attachment[fileNo]}" />
-				<div class="form-row flex flex-col lg:flex-row">
+				<div class="form-row mt-2 flex flex-col lg:flex-row">
 					<div class="lg:flex lg:items-center lg:w-28">
 						<span>첨부파일 ${inputNo}</span>
 					</div>
@@ -174,7 +174,7 @@ function ArticleModify__checkAndSubmit(form) {
 					</div>
 				</div>
 			</c:forEach>
-			<div class="form-row flex flex-col lg:flex-row">
+			<div class="form-row mt-2 flex flex-col lg:flex-row">
 				<div class="lg:flex lg:items-center lg:w-28">
 					<span>수정</span>
 				</div>

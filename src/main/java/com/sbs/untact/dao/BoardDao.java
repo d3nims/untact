@@ -34,7 +34,7 @@ public interface BoardDao {
 
 		void addBoard(Map<String, Object> param);
 
-		Board getBoardBync(@Param ("name") String name, @Param ("code") String code);
+		Board getBoardByName(@Param ("name") String name);
 
 
 }

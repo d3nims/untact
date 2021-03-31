@@ -7,28 +7,23 @@
 
 
 <script>
-BoardModify__submited = false;
-	form.name.value = form.name.value.trim();
 
-	if ( form.name.value.length == 0 ) {
-		alert('게시판 이름을 입력해주세요.');
-		form.name.focus();
-
-		return false;
+	BoardModify__submited = false;
+		form.name.value = form.name.value.trim();
+	
+		if ( form.name.value.length == 0 ) {
+			alert('게시판 이름을 입력해주세요.');
+			form.name.focus();
+	
+			return false;
+		}
+	
+	
+		BoardModify__submited = true;
+	
 	}
+	
 
-	form.code.value = form.code.value.trim();
-
-	if ( form.code.value.length == 0 ) {
-		alert('게시판 코드를 입력해주세요.');
-		form.code.focus();
-
-		return false;
-	}
-
-	BoardModify__submited = true;
-
-}
 </script>
 
 <section class="section-1">
@@ -49,11 +44,10 @@ BoardModify__submited = false;
 					<span>게시판 코드</span>
 				</div>
 				<div class="lg:flex-grow">
-					<input value="${board.code}" type="text" name="code" autofocus="autofocus"
-						class="form-row-input w-full rounded-sm" placeholder="게시판 코드를 입력해주세요." />
+					${board.code}
 				</div>
 			</div>
-			<div class="form-row flex flex-col lg:flex-row">
+			<div class="form-row mt-2 flex flex-col lg:flex-row">
 				<div class="lg:flex lg:items-center lg:w-28">
 					<span>수정</span>
 				</div>

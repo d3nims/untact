@@ -59,7 +59,7 @@ public class UsrMemberController {
 		return memberService.join(param);
 	}
 	
-	@PostMapping("/usr/member/doLogin")
+	@GetMapping("/usr/member/doLogin")
 	@ResponseBody
 	public ResultData doLogin(String loginId, String loginPw, HttpSession session) {
 		
@@ -125,7 +125,7 @@ public class UsrMemberController {
 		return new ResultData("S-1", String.format("%s님 환영합니다.", existingMember.getNickname()), "authKey", existingMember.getAuthKey(), "member", existingMember);
 	}
 		
-	@PostMapping("/usr/member/doLogout")
+	@GetMapping("/usr/member/doLogout")
 	@ResponseBody
 	public ResultData doLogout(HttpSession session) {
 		
