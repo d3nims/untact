@@ -35,13 +35,6 @@ public class ArticleService {
 		return new ResultData("S-1", "성공하였습니다.", "id", id);
 	}
 
-	public ResultData deleteArticle(int id) {
-		articleDao.deleteArticle(id);
-
-		return new ResultData("S-1", "삭제하였습니다.", "id", id);
-	}
-
-	
 
 	public List<Article> getArticles(String searchKeywordType, String searchKeyword) {
 		return articleDao.getArticles(searchKeywordType, searchKeyword);
@@ -59,6 +52,12 @@ public class ArticleService {
 		return new ResultData("F-1", "권한이 없습니다.");
 	}
 
+	public ResultData deleteArticle(int id) {
+		articleDao.deleteArticle(id);
+
+		return new ResultData("S-1", "삭제하였습니다.", "id", id);
+	}
+	
 	public ResultData getActorCanDeleteRd(Article article, Member actor) {
 		return getActorCanModifyRd(article, actor);
 	}

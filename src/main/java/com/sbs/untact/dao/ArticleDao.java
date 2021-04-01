@@ -38,8 +38,6 @@ public interface ArticleDao {
 
 	void addReply(Map<String, Object> param);
 
-	
-	
 
 
 	int getArticlesTotalCount(@Param("boardId") int boardId,

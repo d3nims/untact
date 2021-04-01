@@ -171,7 +171,7 @@ public class AdmArticleController extends BaseController {
 	@RequestMapping("/adm/article/doDelete")
 	@ResponseBody
 	public ResultData doDelete(Integer id, HttpServletRequest req) {
-		Member loginedMemberId = (Member) req.getAttribute("loginedMemberId");
+		Member loginedMemberId = (Member) req.getAttribute("loginedMember");
 
 		if (id == null) {
 			return new ResultData("F-1", "id를 입력해주세요.");

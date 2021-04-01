@@ -1,6 +1,5 @@
 package com.sbs.untact.controller;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -8,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -16,15 +14,17 @@ import org.springframework.web.multipart.MultipartRequest;
 
 import com.sbs.untact.dto.Article;
 import com.sbs.untact.dto.Board;
-import com.sbs.untact.dto.GenFile;
 import com.sbs.untact.dto.Member;
 import com.sbs.untact.dto.ResultData;
+import com.sbs.untact.service.ArticleService;
 import com.sbs.untact.service.BoardService;
 import com.sbs.untact.service.GenFileService;
 import com.sbs.untact.util.Util;
 
 @Controller
 public class AdmBoardController extends BaseController{
+	@Autowired
+	private ArticleService articleService;
 	@Autowired
 	private BoardService boardService;
 	@Autowired
@@ -33,12 +33,65 @@ public class AdmBoardController extends BaseController{
 	
 	
 	@RequestMapping("/adm/board/detail")
-	public String showDetail(HttpServletRequest req, Integer id) {
-		Board boards = boardService.getForPrintBoard(id);
+	public String showDetail(HttpServletRequest req, @RequestParam(defaultValue = "1") int boardId,
+			String searchKeywordType, String searchKeyword, @RequestParam(defaultValue = "1") int page) {
+		Board board = articleService.getBoard(boardId);
 
-		req.setAttribute("boards", boards);
+		req.setAttribute("board", board);
 
-		return "adm/board/detail";
+		if (board == null) {
+			return msgAndBack(req, "존재하지 않는 게시판 입니다.");
+		}
+
+		if (searchKeywordType != null) {
+			searchKeywordType = searchKeywordType.trim();
+		}
+
+		if (searchKeywordType == null || searchKeywordType.length() == 0) {
+			searchKeywordType = "titleAndBody";
+		}
+
+		if (searchKeyword != null && searchKeyword.length() == 0) {
+			searchKeyword = null;
+		}
+
+		if (searchKeyword != null) {
+			searchKeyword = searchKeyword.trim();
+		}
+
+		if (searchKeyword == null) {
+			searchKeywordType = null;
+		}
+
+		int totalItemsCount = articleService.getArticlesTotalCount(boardId, searchKeywordType, searchKeyword);
+		
+		int itemsInAPage = 20;
+
+		int totalPage = (int)Math.ceil(totalItemsCount / (double)itemsInAPage);
+		int pageMenuArmSize = 10;
+		int pageMenuStart = page - pageMenuArmSize;
+		
+		if (pageMenuStart < 1) {
+			pageMenuStart = 1;
+		}
+		
+		int pageMenuEnd = page + pageMenuArmSize;
+		if (pageMenuEnd > totalPage) {
+			pageMenuEnd = totalPage;
+		}
+		
+		List<Article> articles = articleService.getForPrintArticles(boardId, searchKeywordType, searchKeyword, page,
+				itemsInAPage);
+		req.setAttribute("totalItemsCount", totalItemsCount);
+		req.setAttribute("articles", articles);
+		req.setAttribute("page", page);
+		req.setAttribute("totalPage", totalPage);
+		
+		req.setAttribute("pageMenuArmSize", pageMenuArmSize);
+		req.setAttribute("pageMenuStart", pageMenuStart);
+		req.setAttribute("pageMenuEnd", pageMenuEnd);
+
+		return "adm/article/list";
 	}
 	
 	@RequestMapping("/adm/board/list")
@@ -130,7 +183,7 @@ public class AdmBoardController extends BaseController{
 	@RequestMapping("/adm/board/doDelete")
 	@ResponseBody
 	public ResultData doDelete(Integer id, HttpServletRequest req) {
-		Member loginedMemberId = (Member) req.getAttribute("loginedMemberId");
+		Member loginedMemberId = (Member) req.getAttribute("loginedMember");
 
 		if (id == null) {
 			return new ResultData("F-1", "id를 입력해주세요.");
