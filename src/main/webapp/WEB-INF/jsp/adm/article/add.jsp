@@ -106,24 +106,28 @@ function ArticleAdd__checkAndSubmit(form) {
 			<input type="hidden" name="genFileIdsStr" value="" />
 			<input type="hidden" name="boardId" value="${param.boardId}" />
 			<div class="form-row flex flex-col lg:flex-row">
-				<div class="lg:flex lg:items-center lg:w-28">
-					<span>제목</span>
-				</div>
-				<div class="lg:flex-grow">
-					<input type="text" name="title" autofocus="autofocus"
-						class="form-row-input w-full rounded-sm" placeholder="제목을 입력해주세요." />
-				</div>
+				<label class="label">
+              	<span class="label-text text-xl">제목</span>
+           		 </label>
+           		 <div class="lg:flex-grow">
+           		 	<input type="text" name="title" autofocus="autofocus" 
+           		 		class="input input-bordered ml-3 w-full rounded-sm"  placeholder="제목을 입력해주세요.">
+          		</div>
 			</div>
-			<div class="form-row flex flex-col lg:flex-row">
-				<div class="lg:flex lg:items-center lg:w-28">
-					<span>내용</span>
-				</div>
-				<div class="lg:flex-grow">
-					<textarea name="body" class="form-row-input w-full rounded-sm" placeholder="내용을 입력해주세요."></textarea>
-				</div>
+			<div class="form-row flex flex-col lg:flex-row mt-5">
+			
+				<label class="label">
+              	<span class="label-text text-xl">내용</span>
+           		 </label>
+           		 <div class="lg:flex-grow">
+           		 	<textarea name="body" autofocus="autofocus" 
+           		 		class="input input-bordered ml-3 w-full rounded-sm"  placeholder="내용을 입력해주세요."></textarea>
+          		</div>
+
+				
 			</div>
 			<c:forEach begin="1" end="${fileInputMaxCount}" var="inputNo">
-				<div class="form-row flex flex-col lg:flex-row">
+				<div class="form-row flex flex-col lg:flex-row mt-3">
 					<div class="lg:flex lg:items-center lg:w-28">
 						<span>첨부파일 ${inputNo}</span>
 					</div>
@@ -133,14 +137,14 @@ function ArticleAdd__checkAndSubmit(form) {
 					</div>
 				</div>
 			</c:forEach>
-			<div class="form-row flex flex-col lg:flex-row">
-				<div class="lg:flex lg:items-center lg:w-28">
-					<span>작성</span>
-				</div>
+			<div class="form-row flex flex-col lg:flex-row mt-5">
+				<div class="lg:flex lg:items-center lg:w-28"></div>
 				<div class="lg:flex-grow">
 					<div class="btns">
 						<input type="submit" class="btn-primary bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded" value="작성">
 						<input onclick="history.back();" type="button" class="btn-info bg-red-500 hover:bg-red-dark text-white font-bold py-2 px-4 rounded" value="취소">
+
+
 					</div>
 				</div>
 			</div>

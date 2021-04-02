@@ -10,6 +10,10 @@
 
 <section class="section-1">
 	<div class="bg-white shadow-md rounded container mx-auto p-8 mt-8">
+		
+		<div class="container mx-auto h-full flex m-0">
+				<a class="text-4xl text-gray-700 font-bold">게시판 관리</a>
+		</div>
 		<div class="flex items-center">
 		
 
@@ -17,10 +21,7 @@
 
 			<a href="add?boardId=${board.id}" class="btn-primary bg-green-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded">게시판 생성</a>
 		</div>
-		
-		<div class="container mx-auto h-full flex">
-				<a class="text-4xl text-gray-700 font-bold">게시판 관리</a>
-		</div>
+
 		
 		<form class="flex mt-3">
 			<select name="searchKeywordType">
@@ -39,34 +40,59 @@
 			<input class="ml-3 btn-primary bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded" type="submit" value="검색" />
 		</form>
 		
-		<c:forEach items="${boards}" var="board">
+		<div>
 			<c:set var="detailUrl" value="detail?id=${board.id}" />
 			<div class="flex items-center mt-10">
-				<a href="${detailUrl}" class="font-bold">NO. ${board.id}</a>
+				<a href="${detailUrl}" class="font-bold">NO. 1</a>
 				<a href="${detailUrl}" class="ml-2 font-light text-gray-600">${board.regDate}</a>
 				<div class="flex-grow"></div>
-				
-				
 			</div>
+				
 			<div class="mt-2">
-				<a href="${detailUrl}" class="text-2xl text-gray-700 font-bold hover:underline">${board.code}</a>
+				<a href="/adm/board/detail?boardId=1" class="text-2xl text-gray-700 font-bold hover:underline">notice</a>
 				<c:if test="${thumbUrl != null}">
 					<a class="block" href="${detailUrl}">
 						<img class="max-w-sm" src="${thumbUrl}" alt="" />
 					</a>
 				</c:if>
-					<a href="${detailUrl}" class="mt-2 text-gray-600 block">${board.name}</a>
+					<a href="/adm/board/detail?boardId=1" class="mt-2 text-gray-600 block">공지사항</a>
 			</div>
 			<div class="flex items-center mt-4">
-					<a href="detail?id=${board.id}" class="text-blue-500 hover:underline">자세히 보기</a>
+					<a href="/adm/board/detail?boardId=1" class="text-blue-500 hover:underline">자세히 보기</a>
 					<a href="modify?id=${board.id}" class="ml-2 text-blue-500 hover:underline">수정</a>
 					<a onclick="if ( !confirm('삭제하시겠습니까?') ) return false;" href="doDelete?id=${board.id}" class="ml-2 text-blue-500 hover:underline">삭제</a>
 					<div class="flex-grow"></div>
-					<div>
-					</div>
-				</div>
+			</div>
+		</div>
+		
+		<div>
+			<c:set var="detailUrl" value="detail?id=${board.id}" />
+			<div class="flex items-center mt-10">
+				<a href="${detailUrl}" class="font-bold">NO. 2</a>
+				<a href="${detailUrl}" class="ml-2 font-light text-gray-600">${board.regDate}</a>
+				<div class="flex-grow"></div>
+			</div>
+				
+			<div class="mt-2">
+				<a href="/adm/board/detail?boardId=2" class="text-2xl text-gray-700 font-bold hover:underline">free</a>
+				<c:if test="${thumbUrl != null}">
+					<a class="block" href="${detailUrl}">
+						<img class="max-w-sm" src="${thumbUrl}" alt="" />
+					</a>
+				</c:if>
+					<a href="/adm/board/detail?boardId=2" class="mt-2 text-gray-600 block">자유게시판</a>
+			</div>
+			<div class="flex items-center mt-4">
+					<a href="/adm/board/detail?boardId=2" class="text-blue-500 hover:underline">자세히 보기</a>
+					<a href="modify?id=${board.id}" class="ml-2 text-blue-500 hover:underline">수정</a>
+					<a onclick="if ( !confirm('삭제하시겠습니까?') ) return false;" href="doDelete?id=${board.id}" class="ml-2 text-blue-500 hover:underline">삭제</a>
+					<div class="flex-grow"></div>
+			</div>
+		</div>
 			
-		</c:forEach>
+			
+		
+		
 		
 		<nav class="flex justify-center rounded-md shadow-sm mt-3" aria-label="Pagination">
 			<c:if test="${pageMenuStart != 1}">

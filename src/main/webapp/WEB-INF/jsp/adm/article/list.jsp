@@ -10,7 +10,11 @@
 <section class="section-1">
 	
 	<div class="bg-white shadow-md rounded container mx-auto p-8 mt-8">
+		<div class="container mx-auto h-full flex m-0">
+				<a class="text-4xl text-gray-700 font-bold">게시물 관리</a>
+		</div>
 		<div class="flex items-center">
+		
 			<select class="py-2 select-board-id">
 				<option value="1">공지사항</option>
 				<option value="2">자유게시판</option>
