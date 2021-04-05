@@ -144,7 +144,6 @@ function ArticleAdd__checkAndSubmit(form) {
 						<input type="submit" class="btn-primary bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded" value="작성">
 						<input onclick="history.back();" type="button" class="btn-info bg-red-500 hover:bg-red-dark text-white font-bold py-2 px-4 rounded" value="취소">
 
-
 					</div>
 				</div>
 			</div>

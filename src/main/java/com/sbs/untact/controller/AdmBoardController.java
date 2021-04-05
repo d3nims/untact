@@ -22,16 +22,14 @@ import com.sbs.untact.service.GenFileService;
 import com.sbs.untact.util.Util;
 
 @Controller
-public class AdmBoardController extends BaseController{
+public class AdmBoardController extends BaseController {
 	@Autowired
 	private ArticleService articleService;
 	@Autowired
 	private BoardService boardService;
 	@Autowired
 	private GenFileService genFileService;
-	
-	
-	
+
 	@RequestMapping("/adm/board/detail")
 	public String showDetail(HttpServletRequest req, @RequestParam(defaultValue = "1") int boardId,
 			String searchKeywordType, String searchKeyword, @RequestParam(defaultValue = "1") int page) {
@@ -64,40 +62,39 @@ public class AdmBoardController extends BaseController{
 		}
 
 		int totalItemsCount = articleService.getArticlesTotalCount(boardId, searchKeywordType, searchKeyword);
-		
+
 		int itemsInAPage = 20;
 
-		int totalPage = (int)Math.ceil(totalItemsCount / (double)itemsInAPage);
+		int totalPage = (int) Math.ceil(totalItemsCount / (double) itemsInAPage);
 		int pageMenuArmSize = 10;
 		int pageMenuStart = page - pageMenuArmSize;
-		
+
 		if (pageMenuStart < 1) {
 			pageMenuStart = 1;
 		}
-		
+
 		int pageMenuEnd = page + pageMenuArmSize;
 		if (pageMenuEnd > totalPage) {
 			pageMenuEnd = totalPage;
 		}
-		
+
 		List<Article> articles = articleService.getForPrintArticles(boardId, searchKeywordType, searchKeyword, page,
 				itemsInAPage);
 		req.setAttribute("totalItemsCount", totalItemsCount);
 		req.setAttribute("articles", articles);
 		req.setAttribute("page", page);
 		req.setAttribute("totalPage", totalPage);
-		
+
 		req.setAttribute("pageMenuArmSize", pageMenuArmSize);
 		req.setAttribute("pageMenuStart", pageMenuStart);
 		req.setAttribute("pageMenuEnd", pageMenuEnd);
 
-		return "adm/article/list";
+		return "adm/board/detail";
 	}
-	
+
 	@RequestMapping("/adm/board/list")
 	public String showList(HttpServletRequest req, String searchKeywordType, String searchKeyword,
-		 @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "1") int boardId) {
-
+			@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "1") int boardId) {
 
 		if (searchKeywordType != null) {
 			searchKeywordType = searchKeywordType.trim();
@@ -118,20 +115,19 @@ public class AdmBoardController extends BaseController{
 		if (searchKeyword == null) {
 			searchKeywordType = null;
 		}
-		
+
 		int totalItemsCount = boardService.getBoardsTotalCount(boardId, searchKeywordType, searchKeyword);
 
-		
 		int itemsInAPage = 20;
 
-		int totalPage = (int)Math.ceil(totalItemsCount / (double)itemsInAPage);
+		int totalPage = (int) Math.ceil(totalItemsCount / (double) itemsInAPage);
 		int pageMenuArmSize = 10;
 		int pageMenuStart = page - pageMenuArmSize;
-		
+
 		if (pageMenuStart < 1) {
 			pageMenuStart = 1;
 		}
-		
+
 		int pageMenuEnd = page + pageMenuArmSize;
 		if (pageMenuEnd > totalPage) {
 			pageMenuEnd = totalPage;
@@ -144,14 +140,14 @@ public class AdmBoardController extends BaseController{
 		req.setAttribute("boards", boards);
 		req.setAttribute("page", page);
 		req.setAttribute("totalPage", totalPage);
-		
+
 		req.setAttribute("pageMenuArmSize", pageMenuArmSize);
 		req.setAttribute("pageMenuStart", pageMenuStart);
 		req.setAttribute("pageMenuEnd", pageMenuEnd);
-		
+
 		return "adm/board/list";
 	}
-	
+
 	@RequestMapping("/adm/board/add")
 	public String showAdd(@RequestParam Map<String, Object> param, HttpServletRequest req) {
 		return "adm/board/add";
@@ -176,10 +172,9 @@ public class AdmBoardController extends BaseController{
 
 		int newBoardId = (int) addBoardRd.getBody().get("id");
 
-		return msgAndReplace(req, String.format("%d번 게시판이 생성 되었습니다.", newBoardId),
-				"../board/detail?id=" + newBoardId);
+		return msgAndReplace(req, String.format("%d번 게시판이 생성 되었습니다.", newBoardId), "../board/detail?id=" + newBoardId);
 	}
-	
+
 	@RequestMapping("/adm/board/doDelete")
 	@ResponseBody
 	public ResultData doDelete(Integer id, HttpServletRequest req) {
@@ -203,7 +198,7 @@ public class AdmBoardController extends BaseController{
 
 		return boardService.deleteBoard(id);
 	}
-	
+
 	@RequestMapping("/adm/board/modify")
 	public String showModify(Integer id, HttpServletRequest req) {
 		if (id == null) {
@@ -220,43 +215,37 @@ public class AdmBoardController extends BaseController{
 
 		return "adm/board/modify";
 	}
-	
+
 	@RequestMapping("/adm/board/doModify")
 	@ResponseBody
-	public ResultData doModify(@RequestParam Map<String, Object> param, HttpServletRequest req,
-			String name) {
+	public ResultData doModify(@RequestParam Map<String, Object> param, HttpServletRequest req, String name) {
 		Member loginedMemberId = (Member) req.getAttribute("loginedMember");
-		
+
 		int id = Util.getAsInt(param.get("id"), 0);
 
-
-		if ( Util.isEmpty(param.get("name")) ) {
+		if (Util.isEmpty(param.get("name"))) {
 			return new ResultData("F-1", "name을 입력해주세요.");
 		}
 
-
 		Board board = boardService.getBoard(id);
-		
+
 		Board existingBoard = boardService.getBoardByName(name);
 
 		if (board == null) {
 			return new ResultData("F-1", "해당 게시판은 존재하지 않습니다.");
 		}
-		
+
 		if (existingBoard != null) {
-			return new ResultData("F-2",String.format("%s(은)는 이미 사용중인 게시판이름 입니다.", name));
+			return new ResultData("F-2", String.format("%s(은)는 이미 사용중인 게시판이름 입니다.", name));
 		}
-		
 
 		ResultData actorCanModifyRd = boardService.getActorCanModifyRd(board, loginedMemberId);
 
 		if (actorCanModifyRd.isFail()) {
 			return actorCanModifyRd;
 		}
-		
-		
 
 		return boardService.modifyBoard(param);
 	}
-	
+
 }

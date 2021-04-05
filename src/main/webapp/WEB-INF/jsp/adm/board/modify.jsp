@@ -5,7 +5,9 @@
 
 <%@ include file="../part/mainLayoutHead.jspf"%>
 
-
+<script>
+const boardId = parseInt("${board.id}");
+</script>
 <script>
 
 	BoardModify__submited = false;

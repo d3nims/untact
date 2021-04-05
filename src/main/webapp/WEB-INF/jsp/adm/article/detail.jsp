@@ -6,7 +6,21 @@
 
 <c:set var="fileInputMaxCount" value="10" />
 
+<script>
+var addReplyFormData = new FormData(form);
+
+$.ajax({
+	url : '/adm/article/doAddReply',
+	data : addReplyFormData,
+	processData : false,
+	contentType : false,
+	dataType : "json",
+	type : 'POST',
+	success : onSuccess
+});
+</script>
 <section class="section-1">
+	
 	<div class="bg-white shadow-md rounded container mx-auto p-8 mt-8">
 		<div class="w-full">
 			<div class="flex flex-row mt-2 py-3">
@@ -84,10 +98,19 @@
 
 					</button>
 				</span>
-				<input type="search" class="w-full py-2 pl-4 pr-10 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400 focus:bg-white focus:outline-none focus:border-blue-500 focus:text-gray-900 focus:shadow-outline-blue" style="border-radius: 25px" placeholder="댓글을 입력해주세요." autocomplete="off">
+				<form onsubmit="ArticleAddReply__checkAndSubmit(this); return false;" action="doAddReply" method="POST" enctype="multipart/form-data">
+					<div>
+						<input type="search" class="w-full py-2 pl-4 pr-10 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400 focus:bg-white focus:outline-none focus:border-blue-500 focus:text-gray-900 focus:shadow-outline-blue" 
+							style="border-radius: 25px" placeholder="댓글을 입력해주세요." autocomplete="off">
+						<div class="btns">
+							<input type="submit" class="btn-primary mt-3 bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded" value="등록">
+						</div>
+					</div>	
+				</form>	
 			</div>
 		</div>
-	</div>
+		</div>
+	
 
 	<!--
 		<div>
@@ -114,7 +137,7 @@
 			</div>
 		</form>
 		-->
-	</div>
+
 </section>
 
 <%@ include file="../part/mainLayoutFoot.jspf"%>

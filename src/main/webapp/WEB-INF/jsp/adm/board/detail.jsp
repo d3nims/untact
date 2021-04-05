@@ -11,13 +11,13 @@
 		<div class="w-full">
 			<div class="flex flex-row mt-2 py-3">
 				<div class="rounded-full border-2 border-pink-500">
-					<img class="w-12 h-12 object-cover rounded-full shadow cursor-pointer" alt="User avatar" src="${article.writerThumbImgUrl}">
+					<img class="w-12 h-12 object-cover rounded-full shadow cursor-pointer" alt="User avatar" src="${board.writerThumbImgUrl}">
 				</div>
 				<div class="flex flex-col mb-2 ml-4 mt-1">
-					<div class="text-gray-600 text-sm font-semibold">${article.extra__writer}</div>
+					<div class="text-gray-600 text-sm font-semibold">${board.extra__writer}</div>
 					<div class="flex w-full mt-1">
-						<a href="?boardId=${param.boardId}" class="text-blue-700 font-base text-xs mr-1 cursor-pointer"> ${article.extra__boardName} </router-link>
-						<div class="text-gray-400 font-thin text-xs">${article.regDate}</div>
+						<a href="?boardId=${param.boardId}" class="text-blue-700 font-base text-xs mr-1 cursor-pointer"> ${board.extra__boardName} </router-link>
+						<div class="text-gray-400 font-thin text-xs">${board.regDate}</div>
 					</div>
 				</div>
 			</div>
@@ -25,7 +25,7 @@
 			<div class="text-gray-400 font-medium text-sm mb-7 mt-6">
 				<c:forEach begin="1" end="${fileInputMaxCount}" var="inputNo">
 					<c:set var="fileNo" value="${String.valueOf(inputNo)}" />
-					<c:set var="file" value="${article.extra.file__common__attachment[fileNo]}" />
+					<c:set var="file" value="${board.extra.file__common__attachment[fileNo]}" />
 					${file.mediaHtml}
 				</c:forEach>
 			</div>
