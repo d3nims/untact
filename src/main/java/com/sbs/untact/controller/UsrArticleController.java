@@ -100,7 +100,7 @@ public class UsrArticleController {
 		return articleService.addArticle(param);
 	}
 	
-	@PostMapping("/usr/article/doAddReply")
+	@GetMapping("/usr/article/doAddReply")
 	@ResponseBody
 	public ResultData doAddReply(@RequestParam Map<String, Object> param, HttpServletRequest req) {
 		int loginedMemberId = (int)req.getAttribute("loginedMemberId");

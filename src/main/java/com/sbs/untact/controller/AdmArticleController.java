@@ -131,10 +131,11 @@ public class AdmArticleController extends BaseController {
 			return new ResultData("F-1", "body를 입력해주세요.");
 		}
 
-		if (param.get("articleId") == null) {
-			return new ResultData("F-1", "articleId를 입력해주세요.");
+		if (param.get("relId") == null) {
+			return new ResultData("F-1", "relId를 입력해주세요.");
 		}
-
+		
+		String relTypeCode = (String)param.get("relTypeCode");
 		param.put("memberId", loginedMemberId);
 
 		return articleService.addReply(param);

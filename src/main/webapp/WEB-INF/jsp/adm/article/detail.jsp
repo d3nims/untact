@@ -70,42 +70,49 @@ $.ajax({
 					</span>
 				</div>
 			</div>
-			<div class="flex w-full border-t border-gray-100">
-				<div class="mt-3 flex flex-row">
-					<div class="flex text-gray-700 font-normal text-sm rounded-md mb-2 mr-4 items-center whitespace-nowrap">
-						댓글:
-						<div class="ml-1 text-gray-400 font-thin text-ms">30</div>
+			
+			
+				
+					<div class="flex w-full border-t border-gray-100">
+						<div class="mt-3 flex flex-row">
+							<div class="flex text-gray-700 font-normal text-sm rounded-md mb-2 mr-4 items-center whitespace-nowrap">
+								댓글:
+								<div class="ml-1 text-gray-400 font-thin text-ms">30</div>
+							</div>
+							<div class="flex text-gray-700 font-normal text-sm rounded-md mb-2 mr-4 items-center whitespace-nowrap">
+								조회:
+								<div class="ml-1 text-gray-400 font-thin text-ms">60k</div>
+							</div>
+						</div>
+						<div class="mt-3 w-full flex justify-end">
+							<div class="flex text-gray-700 font-normal text-sm rounded-md mb-2 items-center whitespace-nowrap">
+								좋아요:
+								<div class="ml-1 text-gray-400 font-thin text-ms">120k</div>
+							</div>
+						</div>
 					</div>
-					<div class="flex text-gray-700 font-normal text-sm rounded-md mb-2 mr-4 items-center whitespace-nowrap">
-						조회:
-						<div class="ml-1 text-gray-400 font-thin text-ms">60k</div>
-					</div>
-				</div>
-				<div class="mt-3 w-full flex justify-end">
-					<div class="flex text-gray-700 font-normal text-sm rounded-md mb-2 items-center whitespace-nowrap">
-						좋아요:
-						<div class="ml-1 text-gray-400 font-thin text-ms">120k</div>
-					</div>
-				</div>
-			</div>
 			<div class="relative flex items-center self-center w-full max-w-xl py-4 text-gray-600 focus-within:text-gray-400">
 				<img class="w-10 h-10 object-cover rounded-full shadow mr-2 cursor-pointer" alt="User avatar" src="https://images.unsplash.com/photo-1477118476589-bff2c5c4cfbb?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=200&amp;q=200">
 				<span class="absolute inset-y-0 right-0 flex items-center pr-6">
 					<button type="submit" class="p-1 focus:outline-none focus:shadow-none hover:text-blue-500">
 						<svg class="w-6 h-6 transition ease-out duration-300 hover:text-blue-500 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                  </svg>
+                   			<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                		</svg>
 
 					</button>
 				</span>
-				<form onsubmit="ArticleAddReply__checkAndSubmit(this); return false;" action="doAddReply" method="POST" enctype="multipart/form-data">
-					<div>
-						<input type="search" class="w-full py-2 pl-4 pr-10 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400 focus:bg-white focus:outline-none focus:border-blue-500 focus:text-gray-900 focus:shadow-outline-blue" 
-							style="border-radius: 25px" placeholder="댓글을 입력해주세요." autocomplete="off">
+				<form action="doAddReply" method="POST">
+					<input type="hidden" name="relTypeCode" value="article" />
+					<input type="hidden" name="relId" value="${param.id}" />
+						<div>
+							<textarea name="body" autofocus="autofocus" 
+	           		 		class="w-full py-2 pl-4 pr-10 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400 focus:bg-white focus:outline-none focus:border-blue-500 focus:text-gray-900 focus:shadow-outline-blue" 
+							style="border-radius: 25px"  placeholder="댓글을 입력해주세요."></textarea>
+						</div>
 						<div class="btns">
 							<input type="submit" class="btn-primary mt-3 bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded" value="등록">
 						</div>
-					</div>	
+						
 				</form>	
 			</div>
 		</div>

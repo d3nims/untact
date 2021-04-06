@@ -102,11 +102,22 @@
 
 	<insert id="addReply" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO reply
-		SET regDate = NOW(),
-		updateDate = NOW(),
-		articleId = #{articleId},
-		`body` = #{body},
-		memberId = #{memberId}
+		<set>
+			regDate = NOW(),
+			updateDate = NOW(),
+			<if test="relTypeCode != null">
+				relTypeCode = #{relTypeCode},
+			</if>
+			<if test="relId != null">
+				relId = #{relId},
+			</if>
+			<if test="body != null">
+				`body` = #{body},
+			</if>
+			<if test="memberId != null">
+				`memberId` = #{memberId},
+			</if>
+		</set>
 	</insert>
 
 	<delete id="deleteArticle">
