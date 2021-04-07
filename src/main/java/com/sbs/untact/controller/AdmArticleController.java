@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -17,9 +18,11 @@ import com.sbs.untact.dto.Article;
 import com.sbs.untact.dto.Board;
 import com.sbs.untact.dto.GenFile;
 import com.sbs.untact.dto.Member;
+import com.sbs.untact.dto.Reply;
 import com.sbs.untact.dto.ResultData;
 import com.sbs.untact.service.ArticleService;
 import com.sbs.untact.service.GenFileService;
+import com.sbs.untact.service.ReplyService;
 import com.sbs.untact.util.Util;
 
 
@@ -29,9 +32,11 @@ public class AdmArticleController extends BaseController {
 	private ArticleService articleService;
 	@Autowired
 	private GenFileService genFileService;
+	@Autowired
+	private ReplyService replyService;
 
 	@RequestMapping("/adm/article/detail")
-	public String showDetail(HttpServletRequest req, Integer id) {
+	public String showDetail(HttpServletRequest req, Integer id, Model model) {
 		if (id == null) {
 			return msgAndBack(req, "id를 입력해주세요.");
 		}
@@ -40,6 +45,7 @@ public class AdmArticleController extends BaseController {
 
 		List<GenFile> files = genFileService.getGenFiles("article", article.getId(), "common", "attachment");
 		
+		List<Reply> replies = replyService.getForPrintReplies("article",id);
 		Map<String, Object> filesMap = new HashMap<>();
 		
 		for (GenFile file : files) {
@@ -49,6 +55,7 @@ public class AdmArticleController extends BaseController {
 		
 		article.getExtraNotNull().put("file__common__attachment", filesMap);
 		req.setAttribute("article", article);
+		req.setAttribute("replies", replies);
 		
 		if (article == null) {
 			return msgAndBack(req, "존재하지 않는 게시물번호 입니다.");
@@ -137,6 +144,7 @@ public class AdmArticleController extends BaseController {
 		
 		String relTypeCode = (String)param.get("relTypeCode");
 		param.put("memberId", loginedMemberId);
+		
 
 		return articleService.addReply(param);
 	}

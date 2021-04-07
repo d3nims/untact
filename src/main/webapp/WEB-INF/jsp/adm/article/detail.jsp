@@ -107,14 +107,32 @@ $.ajax({
 						<div>
 							<textarea name="body" autofocus="autofocus" 
 	           		 		class="w-full py-2 pl-4 pr-10 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400 focus:bg-white focus:outline-none focus:border-blue-500 focus:text-gray-900 focus:shadow-outline-blue" 
-							style="border-radius: 25px"  placeholder="댓글을 입력해주세요."></textarea>
+							style="border-radius: 25px"  placeholder="댓글을 입력해주세요." autocomplete="off"></textarea>
 						</div>
 						<div class="btns">
 							<input type="submit" class="btn-primary mt-3 bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded" value="등록">
 						</div>
 						
 				</form>	
+				
 			</div>
+			<span>댓글</span>
+			
+			<c:forEach items="${replies}" var="reply">
+				<div class="mt-3 flex w-full border-t border-gray-100">
+						<div class="flex flex-row">
+							<div class="flex text-gray-700 font-normal text-sm rounded-md mb-2 mr-4 items-center whitespace-nowrap">
+								${reply.id} : ${reply.body}
+							</div>
+						</div>
+						<div class="w-full flex justify-end">
+							<div class="flex text-gray-700 font-normal text-sm rounded-md mb-2 items-center whitespace-nowrap">
+								<div class="ml-1 text-gray-400 font-thin text-ms">${reply.regDate}</div>
+							</div>
+						</div>
+					</div>
+				
+			</c:forEach>
 		</div>
 		</div>
 	
