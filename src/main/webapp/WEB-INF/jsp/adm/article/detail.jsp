@@ -116,21 +116,28 @@ $.ajax({
 				</form>	
 				
 			</div>
-			<span>댓글</span>
 			
+			<span>댓글</span>
 			<c:forEach items="${replies}" var="reply">
-				<div class="mt-3 flex w-full border-t border-gray-100">
-						<div class="flex flex-row">
-							<div class="flex text-gray-700 font-normal text-sm rounded-md mb-2 mr-4 items-center whitespace-nowrap">
-								${reply.id} : ${reply.body}
-							</div>
-						</div>
-						<div class="w-full flex justify-end">
-							<div class="flex text-gray-700 font-normal text-sm rounded-md mb-2 items-center whitespace-nowrap">
-								<div class="ml-1 text-gray-400 font-thin text-ms">${reply.regDate}</div>
-							</div>
-						</div>
-					</div>
+			<div class="flex-grow px-1">
+                  <div class="flex text-gray-400 text-light text-sm mt-3 flex w-full border-t border-gray-100">
+                    <div>${reply.extra__writer}</div>
+                    <span class="mx-1">·</span>
+                    <div>${reply.updateDate}</div>
+                  </div>
+                  <div class="break-all">
+                    ${reply.body}
+                  </div>
+              </div>
+		
+				<div>
+					<a onclick="if ( !confirm('삭제하시겠습니까?') ) return false;" href="/adm/reply/doDelete?id=${reply.id}" class="ml-2 text-red-500 hover:underline">
+						<span>
+							<i class="fas fa-trash"></i>
+							<span class="hidden sm:inline">삭제</span>
+						</span>
+					</a>
+				</div>
 				
 			</c:forEach>
 		</div>

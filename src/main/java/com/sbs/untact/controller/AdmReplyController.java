@@ -79,8 +79,6 @@ public class AdmReplyController {
 			return actorCanDeleteRd;
 		}
 
-		
-
 
 		return replyService.deleteReply(id);
 	}

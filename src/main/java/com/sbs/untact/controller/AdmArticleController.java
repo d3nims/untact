@@ -34,9 +34,12 @@ public class AdmArticleController extends BaseController {
 	private GenFileService genFileService;
 	@Autowired
 	private ReplyService replyService;
+	
+	
+	
 
 	@RequestMapping("/adm/article/detail")
-	public String showDetail(HttpServletRequest req, Integer id, Model model) {
+	public String showDetail(HttpServletRequest req, Integer id) {
 		if (id == null) {
 			return msgAndBack(req, "id를 입력해주세요.");
 		}
@@ -178,28 +181,34 @@ public class AdmArticleController extends BaseController {
 	}
 
 	@RequestMapping("/adm/article/doDelete")
-	@ResponseBody
-	public ResultData doDelete(Integer id, HttpServletRequest req) {
+	public String doDelete(Integer id, HttpServletRequest req) {
 		Member loginedMemberId = (Member) req.getAttribute("loginedMember");
 
 		if (id == null) {
-			return new ResultData("F-1", "id를 입력해주세요.");
+			return msgAndBack(req, "id를 입력해주세요.");
 		}
 
 		Article article = articleService.getArticle(id);
 
 		if (article == null) {
-			return new ResultData("F-1", "해당 게시물은 존재하지 않습니다.");
+			return msgAndBack(req, "해당 게시물은 존재하지 않습니다.");
+			
 		}
 
 		ResultData actorCanDeleteRd = articleService.getActorCanDeleteRd(article, loginedMemberId);
-
-		if (actorCanDeleteRd.isFail()) {
-			return actorCanDeleteRd;
+		
+		ResultData rd = articleService.deleteArticle(id);
+		
+		if (rd.isFail()) {
+			return msgAndBack(req,rd.getMsg());
 		}
 
-		return articleService.deleteArticle(id);
+		String redirectUrl = "../article/list?boardId=" + rd.getBody().get("boardId");
+		
+		return msgAndReplace(req,rd.getMsg(), redirectUrl);
 	}
+
+
 
 	@RequestMapping("/adm/article/modify")
 	public String showModify(Integer id, HttpServletRequest req) {

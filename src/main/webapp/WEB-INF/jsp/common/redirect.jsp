@@ -13,7 +13,13 @@ if (historyBack) {
 
 var redirectUrl = '${redirectUrl}'.trim();
 
-if (redirectUrl) {
+if ( redirectUrl ) {
 	location.replace(redirectUrl);
+}
+
+var replaceUrl = '${replaceUrl}'.trim();
+
+if ( replaceUrl ) {
+	location.replace(replaceUrl);
 }
 </script>
