@@ -60,9 +60,6 @@ public class AdmArticleController extends BaseController {
 		req.setAttribute("article", article);
 		req.setAttribute("replies", replies);
 		
-		if (article == null) {
-			return msgAndBack(req, "존재하지 않는 게시물번호 입니다.");
-		}
 
 		return "adm/article/detail";
 	}
@@ -133,23 +130,30 @@ public class AdmArticleController extends BaseController {
 	}
 
 	@RequestMapping("/adm/article/doAddReply")
-	@ResponseBody
-	public ResultData doAddReply(@RequestParam Map<String, Object> param, HttpServletRequest req) {
+	public String doAddReply(@RequestParam Map<String, Object> param, HttpServletRequest req) {
 		int loginedMemberId = (int) req.getAttribute("loginedMemberId");
 
 		if (param.get("body") == null) {
-			return new ResultData("F-1", "body를 입력해주세요.");
+			return msgAndBack(req, "body를 입력해주세요.");
 		}
 
 		if (param.get("relId") == null) {
-			return new ResultData("F-1", "relId를 입력해주세요.");
+			return msgAndBack(req, "relId를 입력해주세요.");
 		}
 		
 		String relTypeCode = (String)param.get("relTypeCode");
+		
 		param.put("memberId", loginedMemberId);
 		
+		ResultData addReplyRd = articleService.addReply(param);
 
-		return articleService.addReply(param);
+		
+		int newReplyId = (int) addReplyRd.getBody().get("id");
+		
+		return msgAndReplace(req, String.format("%d번 댓글이 작성되었습니다.", newReplyId),
+				"../article/detail?id=" + newReplyId);
+		
+
 	}
 
 	@RequestMapping("/adm/article/add")
@@ -237,37 +241,41 @@ public class AdmArticleController extends BaseController {
 	}
 
 	@RequestMapping("/adm/article/doModify")
-	@ResponseBody
-	public ResultData doModify(@RequestParam Map<String, Object> param, HttpServletRequest req) {
+	public String doModify(@RequestParam Map<String, Object> param, HttpServletRequest req, String title, String body) {
 		Member loginedMemberId = (Member) req.getAttribute("loginedMember");
 		
 		int id = Util.getAsInt(param.get("id"), 0);
 
 		if ( id == 0 ) {
-			return new ResultData("F-1", "id를 입력해주세요.");
+			return msgAndBack(req, "id를 입력해주세요.");
 		}
 
 		if ( Util.isEmpty(param.get("title")) ) {
-			return new ResultData("F-1", "title을 입력해주세요.");
+			return msgAndBack(req, "title을 입력해주세요.");
+
 		}
 
 		if ( Util.isEmpty(param.get("body")) ) {
-			return new ResultData("F-1", "body를 입력해주세요.");
+			return msgAndBack(req, "body를 입력해주세요.");
 		}
 
 		Article article = articleService.getArticle(id);
 
 		if (article == null) {
-			return new ResultData("F-1", "해당 게시물은 존재하지 않습니다.");
+			return msgAndBack(req, "해당 게시물은 존재하지 않습니다.");
 		}
 
 		ResultData actorCanModifyRd = articleService.getActorCanModifyRd(article, loginedMemberId);
 
-		if (actorCanModifyRd.isFail()) {
-			return actorCanModifyRd;
+		ResultData rd = articleService.modifyArticle(id, title, body);
+		
+		if (rd.isFail()) {
+			return msgAndBack(req,rd.getMsg());
 		}
 
-		return articleService.modifyArticle(param);
+		String redirectUrl = "../article/list?boardId=" + rd.getBody().get("boardId");
+		
+		return msgAndReplace(req,rd.getMsg(), redirectUrl);
 	}
 }
 
