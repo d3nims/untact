@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sbs.untact.dao.BoardDao">
+
+	<select id="getBoard" resultType="Board">
+			SELECT *
+			FROM board
+			WHERE id = #{id}
+	</select>
+	
+	<select id="getForPrintBoard" resultType="Board">
+			SELECT *
+			FROM board
+			WHERE id = #{id}
+	</select>
+	
+	<select id="getBoardsTotalCount" resultType="int">
+			SELECT COUNT(*)
+			FROM board AS
+			B
+			WHERE 1
+	
+			<if test="searchKeywordType == 'name'">
+				AND B.name LIKE CONCAT('%', #{searchKeyword}, '%')
+			</if>
+			<if test="searchKeywordType == 'code'">
+				AND B.code LIKE CONCAT('%', #{searchKeyword}, '%')
+			</if>
+			<if test="searchKeywordType == 'nameAndCode'">
+				AND (B.name LIKE CONCAT('%', #{searchKeyword}, '%') OR
+				B.code LIKE CONCAT('%', #{searchKeyword}, '%'))
+			</if>
+			
+	</select>
+		
+	<select id="getForPrintBoards" resultType="Board">
+			SELECT *
+			FROM board
+			WHERE 1
+			
+			<if test="searchKeywordType == 'name'">
+				AND name LIKE CONCAT('%', #{searchKeyword}, '%')
+			</if>
+			<if test="searchKeywordType == 'code'">
+				AND code LIKE CONCAT('%', #{searchKeyword}, '%')
+			</if>
+			ORDER BY id DESC
+	</select>
+	
+	<select id="getBoardByName" resultType="Board">
+			SELECT *
+			FROM board
+			WHERE
+			name = #{name}
+	
+	</select>
+	
+	<insert id="addBoard" useGeneratedKeys="true" keyProperty="id">
+			INSERT INTO board
+			SET regDate = NOW(),
+			updateDate = NOW(),
+			name = #{name},
+			code = #{code}
+			
+			
+	</insert>
+	
+	<delete id="deleteBoard">
+			DELETE FROM board
+			WHERE id = #{id}
+	</delete>
+	
+	<update id="modifyBoard">
+			UPDATE board
+			<set>
+				<if test="name != null or code != null">
+					updateDate = NOW(),
+				</if>
+				<if test="name != null">
+					name = #{name},
+				</if>
+				<if test="code != null">
+					code = #{code}
+				</if>
+			</set>
+			WHERE id = #{id}
+	</update>
+
+
+	
+</mapper>

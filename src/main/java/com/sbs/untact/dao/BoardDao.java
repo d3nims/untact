@@ -23,8 +23,7 @@ public interface BoardDao {
 
 		void deleteBoard(@Param("id")int id);
 		
-		void modifyBoard(@Param("id")int id, @Param(value = "name") String name,
-				@Param(value = "code") String code);
+		void modifyBoard(@Param("id")int id, @Param(value = "name") String name);
 		
 		void modifyBoard(Map<String, Object> param);
 
@@ -34,7 +33,7 @@ public interface BoardDao {
 
 		void addBoard(Map<String, Object> param);
 
-		Board getBoardByName(@Param ("name") String name);
+		Board getBoardByName( @Param(value = "name") String name,  @Param(value = "code") String code);
 
 
 }

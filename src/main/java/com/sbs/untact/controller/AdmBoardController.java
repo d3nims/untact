@@ -154,49 +154,61 @@ public class AdmBoardController extends BaseController {
 	}
 
 	@RequestMapping("/adm/board/doAdd")
-	public String doAdd(@RequestParam Map<String, Object> param, HttpServletRequest req,
-			MultipartRequest multipartRequest) {
+	public String doAdd(@RequestParam Map<String, Object> param, HttpServletRequest req, String name, String code) {
 		int loginedMemberId = (int) req.getAttribute("loginedMemberId");
 
-		if (param.get("name") == null) {
-			return msgAndBack(req, "name을 입력해주세요.");
+		Board existingBoard = boardService.getBoardByName(name, code);
+		
+		
+		if (Util.isEmpty(param.get("name"))) {
+			return msgAndBack(req, "게시판 이름을 입력해주세요.");
+		}
+		
+		if (Util.isEmpty(param.get("code"))) {
+			return msgAndBack(req, "게시판 코드를 입력해주세요.");
 		}
 
-		if (param.get("code") == null) {
-			return msgAndBack(req, "code를 입력해주세요.");
+		
+		if (existingBoard != null) {
+			return msgAndBack(req, String.format("%s(은)는 이미 사용중인 게시판이름 입니다.", name));
 		}
+		
+		if (existingBoard != null) {
+			return msgAndBack(req, String.format("%s(은)는 이미 사용중인 게시판코드 입니다.", param.get("code")));
+		}
+
 
 		param.put("memberId", loginedMemberId);
 
 		ResultData addBoardRd = boardService.addBoard(param);
 
-		int newBoardId = (int) addBoardRd.getBody().get("id");
-
-		return msgAndReplace(req, String.format("%d번 게시판이 생성 되었습니다.", newBoardId), "../board/detail?id=" + newBoardId);
+		return msgAndReplace(req, String.format("%s 게시판이 생성 되었습니다.", param.get("name")),
+				"../board/list");
 	}
 
 	@RequestMapping("/adm/board/doDelete")
-	@ResponseBody
-	public ResultData doDelete(Integer id, HttpServletRequest req) {
+	public String doDelete(Integer id, HttpServletRequest req, String name) {
 		Member loginedMemberId = (Member) req.getAttribute("loginedMember");
-
-		if (id == null) {
-			return new ResultData("F-1", "id를 입력해주세요.");
-		}
 
 		Board board = boardService.getBoard(id);
 
 		if (board == null) {
-			return new ResultData("F-1", "해당 게시판은 존재하지 않습니다.");
+			return msgAndBack(req, "해당 게시판은 존재하지 않습니다.");
 		}
 
 		ResultData actorCanDeleteRd = boardService.getActorCanDeleteRd(board, loginedMemberId);
 
 		if (actorCanDeleteRd.isFail()) {
-			return actorCanDeleteRd;
+			return msgAndBack(req,actorCanDeleteRd.getMsg());
 		}
+		
+		String boardName = board.getName();
+		
+		ResultData rd = boardService.deleteBoard(id);
 
-		return boardService.deleteBoard(id);
+		
+		return msgAndReplace(req, String.format("%s 게시판이 삭제되었습니다.", boardName),
+				"../board/list");
 	}
 
 	@RequestMapping("/adm/board/modify")
@@ -217,35 +229,43 @@ public class AdmBoardController extends BaseController {
 	}
 
 	@RequestMapping("/adm/board/doModify")
-	@ResponseBody
-	public ResultData doModify(@RequestParam Map<String, Object> param, HttpServletRequest req, String name) {
+	public String doModify(@RequestParam Map<String, Object> param, HttpServletRequest req, String name, String code) {
 		Member loginedMemberId = (Member) req.getAttribute("loginedMember");
 
 		int id = Util.getAsInt(param.get("id"), 0);
 
 		if (Util.isEmpty(param.get("name"))) {
-			return new ResultData("F-1", "name을 입력해주세요.");
+			return msgAndBack(req, "name을 입력해주세요.");
 		}
+		
 
 		Board board = boardService.getBoard(id);
 
-		Board existingBoard = boardService.getBoardByName(name);
+		Board existingBoard = boardService.getBoardByName(name, code);
 
 		if (board == null) {
-			return new ResultData("F-1", "해당 게시판은 존재하지 않습니다.");
+			return msgAndBack(req, "해당 게시판은 존재하지 않습니다.");
 		}
 
 		if (existingBoard != null) {
-			return new ResultData("F-2", String.format("%s(은)는 이미 사용중인 게시판이름 입니다.", name));
+			return msgAndBack(req, String.format("%s(은)는 이미 사용중인 게시판이름 입니다.", (param.get("name"))));
 		}
+
 
 		ResultData actorCanModifyRd = boardService.getActorCanModifyRd(board, loginedMemberId);
 
 		if (actorCanModifyRd.isFail()) {
-			return actorCanModifyRd;
+			return msgAndBack(req,actorCanModifyRd.getMsg());
 		}
 
-		return boardService.modifyBoard(param);
+		
+		ResultData rd = boardService.modifyBoard(param);
+
+		
+		return msgAndReplace(req, String.format("%s 게시판이 수정되었습니다.", name),
+				"../board/list");
+		
 	}
+
 
 }

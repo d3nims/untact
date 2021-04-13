@@ -73,8 +73,8 @@ public class BoardService {
 	}
 	
 	
-	public ResultData modifyBoard(int id, String name, String code) {
-		boardDao.modifyBoard(id, name, code);
+	public ResultData modifyBoard(int id, String name) {
+		boardDao.modifyBoard(id, name);
 
 		return new ResultData("S-1", "게시판을 수정하였습니다.", "id", id);
 	}
@@ -94,9 +94,9 @@ public class BoardService {
 			
 	}
 
-	public Board getBoardByName(String name) {
+	public Board getBoardByName(String name, String code) {
 		
-		return boardDao.getBoardByName(name);
+		return boardDao.getBoardByName(name, code);
 	}
 
 	
