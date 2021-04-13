@@ -1,5 +1,6 @@
 package com.sbs.untact.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -116,6 +117,42 @@ public class ArticleService {
 
 	public int getArticlesTotalCount(int boardId, String searchKeywordType, String searchKeyword) {
 		return articleDao.getArticlesTotalCount(boardId, searchKeywordType, searchKeyword);
+	}
+
+	public Map<String, Object> getActorCanLikeRd(Integer id, Member actor) {
+		Article article = getArticle(id);
+		
+		Map<String, Object> rd = new HashMap<>();
+		
+		if (article.getMemberId() == actor.getId()) {
+			rd.put("F-1", "본인은 추천 할 수 없습니다.");
+			
+			return rd;
+			
+		}
+
+		if (memberService.isAdmin(actor)) {
+			rd.put("S-2", "가능합니다.");
+			
+			return rd;
+		}
+		
+		int likePoint = articleDao.getLikePointByMemberId(id ,actor);
+
+		return rd;
+	}
+
+	
+	
+	public Map<String, Object> likeArticle(Integer id, Member actor) {
+		articleDao.likeArticle(id, actor);
+		
+		Map<String, Object> rd = new HashMap<>();
+		
+		rd.put("ResultCode", "S-1");
+		rd.put("msg", String.format("%d번 게시물을 추천하였습니다.",id));
+		
+		return rd;
 	}
 	
 	

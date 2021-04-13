@@ -151,7 +151,7 @@ public class AdmArticleController extends BaseController {
 		int newReplyId = (int) addReplyRd.getBody().get("id");
 		
 		return msgAndReplace(req, String.format("%d번 댓글이 작성되었습니다.", newReplyId),
-				"../article/detail?id=" + newReplyId);
+				"../article/detail?id=" + param.get("relId"));
 		
 
 	}
@@ -277,6 +277,46 @@ public class AdmArticleController extends BaseController {
 		
 		return msgAndReplace(req,rd.getMsg(), redirectUrl);
 	}
-}
+	
+	
+	
+	
+	@RequestMapping("/adm/article/doLike")
+	public String doLike(@RequestParam Map<String, Object> param, Integer id, HttpServletRequest req) {
+		Member loginedMemberId = (Member) req.getAttribute("loginedMember");
 
+		if (id == null) {
+			return msgAndBack(req, "id를 입력해주세요.");
+		}
+
+		Article article = articleService.getArticle(id);
+
+		if (article == null) {
+			return msgAndBack(req, "해당 게시물은 존재하지 않습니다.");
+			
+		}
+
+		Map<String, Object> actorCanLikeRd = articleService.getActorCanLikeRd(id, loginedMemberId);
+		
+		Map<String, Object> like = articleService.likeArticle(id, loginedMemberId);
+		
+		
+		
+		if (((String) actorCanLikeRd.get("resultCode")).startsWith("F-")) {
+			req.setAttribute("alertMsg", actorCanLikeRd.get("msg"));
+			req.setAttribute("historyBack", true);
+		
+		}
+		if (((ResultData) like).isFail()) {
+			return msgAndBack(req,((ResultData) like).getMsg());
+		}
+
+		String redirectUrl = "../article/detail?id=" + param.get("relId");
+		
+		return msgAndReplace(req,((ResultData) like).getMsg(), redirectUrl);
+	
+
+	}
+
+}
 

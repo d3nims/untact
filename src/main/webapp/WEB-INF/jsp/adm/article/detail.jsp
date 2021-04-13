@@ -139,7 +139,17 @@ $.ajax({
 					</a>
 				</div>
 				
+				<div>
+					<a onclick="if ( !confirm('추천하시겠습니까?') ) return false;" href="/adm/article/doLike=${article.id}" class="ml-2 text-blue-500 hover:underline">
+						<span>
+							<i class="far fa-heart"></i>
+							<span class="hidden sm:inline">좋아요</span>
+						</span>
+					</a>
+				</div>
+				
 			</c:forEach>
+			
 		</div>
 		</div>
 	

@@ -173,10 +173,6 @@ public class AdmBoardController extends BaseController {
 			return msgAndBack(req, String.format("%s(은)는 이미 사용중인 게시판이름 입니다.", name));
 		}
 		
-		if (existingBoard != null) {
-			return msgAndBack(req, String.format("%s(은)는 이미 사용중인 게시판코드 입니다.", param.get("code")));
-		}
-
 
 		param.put("memberId", loginedMemberId);
 

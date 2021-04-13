@@ -54,6 +54,7 @@
 			FROM board
 			WHERE
 			name = #{name}
+
 	
 	</select>
 	
