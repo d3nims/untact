@@ -118,7 +118,8 @@ public class ArticleService {
 	public int getArticlesTotalCount(int boardId, String searchKeywordType, String searchKeyword) {
 		return articleDao.getArticlesTotalCount(boardId, searchKeywordType, searchKeyword);
 	}
-
+	
+	// 좋아요를 누른 클라이언트가 회원인지 비회원인지 확인한다
 	public Map<String, Object> getActorCanLikeRd(Integer id, Member actor) {
 		Article article = getArticle(id);
 		
@@ -137,8 +138,13 @@ public class ArticleService {
 			return rd;
 		}
 		
+		// 누른 사람이 좋아요를 눌렀는지 안눌렀는지 여부를 확인한다
 		int likePoint = articleDao.getLikePointByMemberId(id ,actor);
 
+		if ( likePoint > 0 ) {
+			rd.put("F-2", "이미 추천한 게시물입니다.");
+		}
+		
 		return rd;
 	}
 
@@ -149,8 +155,7 @@ public class ArticleService {
 		
 		Map<String, Object> rd = new HashMap<>();
 		
-		rd.put("ResultCode", "S-1");
-		rd.put("msg", String.format("%d번 게시물을 추천하였습니다.",id));
+		rd.put("S-1", String.format("%d번 게시물을 추천하였습니다.",id));
 		
 		return rd;
 	}

@@ -89,6 +89,25 @@
 			LIMIT #{limitStart}, #{limitTake}
 		</if>
 	</select>
+	
+	<!--int getLikePointByMemberId(@Param("id") int id, @Param("actor") Member actor);
+	 -->
+	<select id="getLikePointByMemberId" resultType="int">
+		SELECT IFNULL(SUM(AL.point),0) AS `point`
+		FROM articleLike AS AL
+		WHERE AL.articleId = #{id}
+		AND AL.memberId = #{memberId}
+	</select>
+	
+	<insert id="likeArticle" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO articleLike
+		SET regDate = NOW(),
+		articleId = #{id},
+		memberId = #{memberId},
+		`point` = 1
+
+	</insert>
+	
 	<insert id="addArticle" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO article
 		SET regDate = NOW(),
@@ -97,7 +116,6 @@
 		memberId = #{memberId},
 		title = #{title},
 		`body` = #{body}
-		
 	</insert>
 
 	<insert id="addReply" useGeneratedKeys="true" keyProperty="id">

@@ -211,6 +211,8 @@ public class AdmArticleController extends BaseController {
 		
 		return msgAndReplace(req,rd.getMsg(), redirectUrl);
 	}
+	
+	
 
 
 

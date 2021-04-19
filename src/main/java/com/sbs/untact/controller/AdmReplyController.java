@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,16 +12,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sbs.untact.dto.Article;
-import com.sbs.untact.dto.Board;
+import com.sbs.untact.dto.Member;
 import com.sbs.untact.dto.Reply;
 import com.sbs.untact.dto.ResultData;
 import com.sbs.untact.service.ArticleService;
 import com.sbs.untact.service.ReplyService;
-import com.sbs.untact.util.Util;
 
 
 @Controller
-public class AdmReplyController {
+public class AdmReplyController extends BaseController{
 	@Autowired
 	private ReplyService replyService;
 	@Autowired
@@ -57,31 +55,39 @@ public class AdmReplyController {
 		return new ResultData("S-1", "성공", "replies", replies);
 	}
 	
+	
+	
 	@RequestMapping("/adm/reply/doDelete")
-	@ResponseBody
-	public ResultData doDelete(Integer id, HttpServletRequest req) {
+	public String doDelete(@RequestParam Map<String, Object> param, Integer id,  HttpServletRequest req) {
 		int loginedMemberId = (int)req.getAttribute("loginedMemberId");
-
-
-		if (id == null) {
-			return new ResultData("F-1", "id를 입력해주세요.");
+		
+		Article article = articleService.getForPrintArticle(id);
+		
+		if (param.get("id") == null) {
+			return msgAndBack(req, "id를 입력해주세요.");
 		}
 
 		Reply reply = replyService.getReply(id);
 
 		if (reply == null) {
-			return new ResultData("F-1", "해당 댓글은 존재하지 않습니다.");
+			return msgAndBack(req, "해당 댓글은 존재하지 않습니다.");
 		}
 		
+		
 		ResultData actorCanDeleteRd = replyService.getActorCanDeleteRd(reply, loginedMemberId);
-
-		if ( actorCanDeleteRd.isFail() ) {
-			return actorCanDeleteRd;
+		
+		ResultData rd = replyService.deleteReply(id);
+	
+		
+		if ( rd.isFail() ) {
+			return msgAndBack(req,rd.getMsg());
 		}
 
-
-		return replyService.deleteReply(id);
+		return msgAndReplace(req, String.format("%d번 댓글이 삭제되었습니다.", id),
+				"../article/detail?id=" + param.get("relId"));
 	}
+	
+	
 	
 	@RequestMapping("/adm/reply/doModify")
 	@ResponseBody
