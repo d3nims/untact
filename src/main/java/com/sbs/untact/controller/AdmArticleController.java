@@ -285,7 +285,7 @@ public class AdmArticleController extends BaseController {
 	
 	@RequestMapping("/adm/article/doLike")
 	public String doLike(@RequestParam Map<String, Object> param, Integer id, HttpServletRequest req) {
-		Member loginedMemberId = (Member) req.getAttribute("loginedMember");
+		int loginedMemberId = (int) req.getAttribute("loginedMemberId");
 
 		if (id == null) {
 			return msgAndBack(req, "id를 입력해주세요.");
@@ -309,11 +309,16 @@ public class AdmArticleController extends BaseController {
 			req.setAttribute("historyBack", true);
 		
 		}
+		
+		
 		if (((ResultData) like).isFail()) {
 			return msgAndBack(req,((ResultData) like).getMsg());
 		}
-
+		
 		String redirectUrl = "../article/detail?id=" + param.get("relId");
+
+		req.setAttribute("locationReplace", redirectUrl);
+
 		
 		return msgAndReplace(req,((ResultData) like).getMsg(), redirectUrl);
 	

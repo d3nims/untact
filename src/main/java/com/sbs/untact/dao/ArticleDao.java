@@ -44,8 +44,8 @@ public interface ArticleDao {
 			@Param("searchKeywordType") String searchKeywordType,
 			@Param("searchKeyword") String searchKeyword);
 
-	void likeArticle(@Param("id") int id, @Param("actor") Member actor);
+	void likeArticle(@Param("id") int id, @Param("memberId") int memberId);
 
-	int getLikePointByMemberId(@Param("id") int id, @Param("actor") Member actor);
+	int getLikePointByMemberId(@Param("id") int id, @Param("memberId") int memberId);
 
 }

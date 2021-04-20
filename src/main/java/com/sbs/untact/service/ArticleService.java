@@ -120,12 +120,14 @@ public class ArticleService {
 	}
 	
 	// 좋아요를 누른 클라이언트가 회원인지 비회원인지 확인한다
-	public Map<String, Object> getActorCanLikeRd(Integer id, Member actor) {
+	public Map<String, Object> getActorCanLikeRd(Integer id, int actor) {
 		Article article = getArticle(id);
 		
 		Map<String, Object> rd = new HashMap<>();
 		
-		if (article.getMemberId() == actor.getId()) {
+
+		
+		if (article.getMemberId() == actor) {
 			rd.put("F-1", "본인은 추천 할 수 없습니다.");
 			
 			return rd;
@@ -150,7 +152,7 @@ public class ArticleService {
 
 	
 	
-	public Map<String, Object> likeArticle(Integer id, Member actor) {
+	public Map<String, Object> likeArticle(Integer id, int actor) {
 		articleDao.likeArticle(id, actor);
 		
 		Map<String, Object> rd = new HashMap<>();

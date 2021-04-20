@@ -57,7 +57,17 @@ $.ajax({
 					<img class="inline-block object-cover w-8 h-8 -ml-2 text-white border-2 border-white rounded-full shadow-sm cursor-pointer" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=634&amp;q=80" alt="">
 					<img class="inline-block object-cover w-8 h-8 -ml-2 text-white border-2 border-white rounded-full shadow-sm cursor-pointer" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=2.25&amp;w=256&amp;h=256&amp;q=80" alt="">
 				</div>
+				
 				<div class="flex justify-end w-full mt-1 pt-2">
+					<div class=mr-3>
+					<span>${article.extra.likePoint}</span>
+						<a onclick="if ( !confirm('추천하시겠습니까?') ) return false;" href="/adm/article/doLike?id=${article.id}" class="ml-2 text-blue-500 hover:underline">
+							<span>
+								<i class="far fa-thumbs-up"></i>
+								<span class="hidden sm:inline">추천</span>
+							</span>
+						</a>
+					</div>
 					<span class="transition ease-out duration-300 hover:bg-blue-50 bg-blue-100 h-8 px-2 py-2 text-center rounded-full text-blue-400 cursor-pointer mr-2">
 						<svg xmlns="http://www.w3.org/2000/svg" fill="none" width="14px" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path>
@@ -68,6 +78,8 @@ $.ajax({
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
                   </svg>
 					</span>
+				
+					
 				</div>
 			</div>
 			
@@ -138,15 +150,7 @@ $.ajax({
 						</span>
 					</a>
 				</div>
-				
-				<div>
-					<a onclick="if ( !confirm('추천하시겠습니까?') ) return false;" href="/adm/article/doLike=${article.id}" class="ml-2 text-blue-500 hover:underline">
-						<span>
-							<i class="far fa-heart"></i>
-							<span class="hidden sm:inline">좋아요</span>
-						</span>
-					</a>
-				</div>
+	
 				
 			</c:forEach>
 			
