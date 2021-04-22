@@ -284,45 +284,29 @@ public class AdmArticleController extends BaseController {
 	
 	
 	@RequestMapping("/adm/article/doLike")
-	public String doLike(@RequestParam Map<String, Object> param, Integer id, HttpServletRequest req) {
+	public String doLike(@RequestParam Map<String, Object> param, int id, HttpServletRequest req) {
+
 		int loginedMemberId = (int) req.getAttribute("loginedMemberId");
 
-		if (id == null) {
-			return msgAndBack(req, "id를 입력해주세요.");
-		}
-
-		Article article = articleService.getArticle(id);
-
-		if (article == null) {
-			return msgAndBack(req, "해당 게시물은 존재하지 않습니다.");
-			
-		}
-
-		Map<String, Object> actorCanLikeRd = articleService.getActorCanLikeRd(id, loginedMemberId);
 		
 		Map<String, Object> like = articleService.likeArticle(id, loginedMemberId);
 		
+		ResultData actorCanLike = (ResultData) articleService.getActorCanLike(id, loginedMemberId);
 		
+		String msg = (String) like.get("msg");
 		
-		if (((String) actorCanLikeRd.get("resultCode")).startsWith("F-")) {
-			req.setAttribute("alertMsg", actorCanLikeRd.get("msg"));
-			req.setAttribute("historyBack", true);
-		
-		}
-		
-		
-		if (((ResultData) like).isFail()) {
-			return msgAndBack(req,((ResultData) like).getMsg());
-		}
-		
-		String redirectUrl = "../article/detail?id=" + param.get("relId");
-
-		req.setAttribute("locationReplace", redirectUrl);
-
-		
-		return msgAndReplace(req,((ResultData) like).getMsg(), redirectUrl);
 	
 
+		if (((ResultData) actorCanLike).isFail()) {
+			return msgAndBack(req,actorCanLike.getMsg());
+		}
+
+
+		req.setAttribute("alertMsg", msg);
+
+		String redirectUrl = "/adm/article/detail?id=" + param.get("id");
+		
+		return msgAndReplace(req,actorCanLike.getMsg(), redirectUrl);
 	}
 
 }

@@ -20,6 +20,7 @@ public class Article extends EntityDto {
 	private String body;
 
 	private String extra__writer;
+	private String extra__likePoint;
 	private String extra__boardName;
 	private String extra__thumbImg;
 	

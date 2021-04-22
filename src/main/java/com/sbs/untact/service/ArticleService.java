@@ -120,34 +120,24 @@ public class ArticleService {
 	}
 	
 	// 좋아요를 누른 클라이언트가 회원인지 비회원인지 확인한다
-	public Map<String, Object> getActorCanLikeRd(Integer id, int actor) {
+	
+	
+	public ResultData getActorCanLike(Integer id, int actor) {
 		Article article = getArticle(id);
-		
-		Map<String, Object> rd = new HashMap<>();
-		
-
+		articleDao.getLikePointByMemberId(id, actor);
 		
 		if (article.getMemberId() == actor) {
-			rd.put("F-1", "본인은 추천 할 수 없습니다.");
+			return new ResultData("F-1", "본인은 추천할 수 없습니다.");
 			
-			return rd;
-			
-		}
-
-		if (memberService.isAdmin(actor)) {
-			rd.put("S-2", "가능합니다.");
-			
-			return rd;
 		}
 		
-		// 누른 사람이 좋아요를 눌렀는지 안눌렀는지 여부를 확인한다
 		int likePoint = articleDao.getLikePointByMemberId(id ,actor);
 
 		if ( likePoint > 0 ) {
-			rd.put("F-2", "이미 추천한 게시물입니다.");
+			return new ResultData("F-2", "이미 추천한 게시물입니다.");
 		}
-		
-		return rd;
+
+		return new ResultData("S-1", id + "번 게시물이 추천되었습니다.");
 	}
 
 	
