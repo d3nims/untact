@@ -38,14 +38,14 @@ public interface ArticleDao {
 
 	void addReply(Map<String, Object> param);
 
-
-
 	int getArticlesTotalCount(@Param("boardId") int boardId,
 			@Param("searchKeywordType") String searchKeywordType,
 			@Param("searchKeyword") String searchKeyword);
 
+	int getLikePointByMemberId(@Param("id") int id, @Param("memberId") int memberId);
+	
 	void likeArticle(@Param("id") int id, @Param("memberId") int memberId);
 
-	int getLikePointByMemberId(@Param("id") int id, @Param("memberId") int memberId);
+	
 
 }

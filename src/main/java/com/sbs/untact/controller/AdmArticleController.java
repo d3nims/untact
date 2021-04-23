@@ -303,11 +303,40 @@ public class AdmArticleController extends BaseController {
 
 
 		req.setAttribute("alertMsg", msg);
-
 		String redirectUrl = "/adm/article/detail?id=" + param.get("id");
 		
 		return msgAndReplace(req,actorCanLike.getMsg(), redirectUrl);
 	}
+	
+//	@RequestMapping("/adm/article/doLike")
+//	public String doLike(@RequestParam Map<String, Object> param, int id, HttpServletRequest req) {
+//
+//		int loginedMemberId = (int) req.getAttribute("loginedMemberId");
+//
+//		
+//		Map<String, Object> like = articleService.likeArticle(id, loginedMemberId);
+//		
+//		Map<String, Object> actorCanLike = articleService.getActorCanLike(id, loginedMemberId);
+//		
+//		ResultData actorCanLikerd = (ResultData) articleService.getActorCanLikerd(id, loginedMemberId);
+//		
+//		String msg = (String) like.get("msg");
+//		
+//		String redirectUrl = "/adm/article/detail?id=" + param.get("id");
+//
+//		if (((String) actorCanLike.get("resultCode")).startsWith("F-")) {
+//
+//			req.setAttribute("alertMsg", actorCanLike.get("msg"));
+//			req.setAttribute("historyBack", true);
+//			
+//			return "common/redirect";
+//		}
+//
+//		req.setAttribute("alertMsg", msg);
+//
+//		
+//		return msgAndReplace(req,((ResultData) actorCanLike).getMsg(), redirectUrl);
+//	}
 
 }
 
