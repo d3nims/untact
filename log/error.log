@@ -2160,3 +2160,31 @@ org.apache.ibatis.binding.BindingException: Mapper method 'com.sbs.untact.dao.Ar
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:630)
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
 	at java.base/java.lang.Thread.run(Thread.java:832)
+2021-04-25 16:16:26 [ERROR] o.s.b.d.LoggingFailureAnalysisReporter - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8026 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8026 or configure this application to listen on another port.
+
+2021-04-25 16:17:17 [ERROR] o.s.b.d.LoggingFailureAnalysisReporter - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8026 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8026 or configure this application to listen on another port.
+

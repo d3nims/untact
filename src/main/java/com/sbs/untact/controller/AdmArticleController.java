@@ -291,7 +291,7 @@ public class AdmArticleController extends BaseController {
 		
 		Map<String, Object> like = articleService.likeArticle(id, loginedMemberId);
 		
-		ResultData actorCanLike = (ResultData) articleService.getActorCanLike(id, loginedMemberId);
+		ResultData actorCanLike = articleService.getActorCanLike(id, loginedMemberId);
 		
 		String msg = (String) like.get("msg");
 		
