@@ -8,10 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartRequest;
 
 import com.sbs.untact.dto.Article;
@@ -288,19 +286,16 @@ public class AdmArticleController extends BaseController {
 
 		int loginedMemberId = (int) req.getAttribute("loginedMemberId");
 
-		
-		Map<String, Object> like = articleService.likeArticle(id, loginedMemberId);
+
 		
 		ResultData actorCanLike = articleService.getActorCanLike(id, loginedMemberId);
-		
-		String msg = (String) like.get("msg");
-		
-	
-
 		if (((ResultData) actorCanLike).isFail()) {
 			return msgAndBack(req,actorCanLike.getMsg());
 		}
-
+		
+		ResultData likeArticleResultData = articleService.likeArticle(id, loginedMemberId);
+		String msg = likeArticleResultData.getMsg();
+		
 
 		req.setAttribute("alertMsg", msg);
 		String redirectUrl = "/adm/article/detail?id=" + param.get("id");

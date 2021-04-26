@@ -52,9 +52,9 @@
 			<input class="ml-3 shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker" name="searchKeyword" type="text" placeholder="검색어를 입력해주세요." value="${param.searchKeyword}" />
 			<input class="ml-3 btn-primary bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded" type="submit" value="검색" />
 		</form>
-
-		<div>
+		
 			<c:forEach items="${articles}" var="article">
+				<div class="flex justify-start mt-5 border-t border-gray-100"></div>
 				<c:set var="detailUrl" value="detail?id=${article.id}" />
 				<c:set var="thumbFileNo" value="${String.valueOf(1)}" />
 				<c:set var="thumbFile" value="${article.extra.file__common__attachment[thumbFileNo]}" />
