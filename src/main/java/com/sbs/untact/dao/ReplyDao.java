@@ -18,4 +18,8 @@ public interface ReplyDao {
 
 	void modifyReply(@Param("id") int id, @Param("body") String body);
 
+	int getLikePointByMemberId(@Param("id") int id, @Param("memberId") int memberId);
+
+	void likeReply(@Param("id") int id, @Param("memberId") int memberId);
+
 }

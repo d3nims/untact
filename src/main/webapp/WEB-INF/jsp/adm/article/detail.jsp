@@ -141,14 +141,37 @@ $.ajax({
                     ${reply.body}
                   </div>
               </div>
-		
-				<div>
-					<a onclick="if ( !confirm('삭제하시겠습니까?') ) return false;" href="/adm/reply/doDelete?id=${reply.id}" class="ml-2 text-red-500 hover:underline">
-						<span>
-							<i class="fas fa-trash"></i>
-							<span class="hidden sm:inline">삭제</span>
-						</span>
-					</a>
+              <div class="mt-3 flex flex-row">
+	              <div class=mr-3>
+	              		<div>
+							<textarea name="body" autofocus="autofocus" 
+	           		 		class="w-full py-2 pl-4 pr-10 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400 focus:bg-white focus:outline-none focus:border-blue-500 focus:text-gray-900 focus:shadow-outline-blue" 
+							style="border-radius: 25px"  placeholder="댓글을 입력해주세요." autocomplete="off"></textarea>
+						
+							<a href="/adm/reply/doModify?id=${reply.id}" class="ml-2 text-green-500 hover:underline">
+								<span>
+									<i class="fas fa-edit"></i>
+									<span class="hidden sm:inline">수정</span>
+								</span>
+							</a>
+						</div>
+					</div>
+					<div class=mr-3>
+							<a onclick="if ( !confirm('추천하시겠습니까?') ) return false;" href="/adm/reply/doLike?id=${reply.id}" class="ml-2 text-blue-500 hover:underline">
+								<span>
+									<i class="far fa-heart"></i>
+									<span class="hidden sm:inline">좋아요</span>
+								</span>
+							</a>
+					</div>
+					<div>
+						<a onclick="if ( !confirm('삭제하시겠습니까?') ) return false;" href="/adm/reply/doDelete?id=${reply.id}" class="ml-2 text-red-500 hover:underline">
+							<span>
+								<i class="fas fa-trash"></i>
+								<span class="hidden sm:inline">삭제</span>
+							</span>
+						</a>
+					</div>
 				</div>
 	
 				

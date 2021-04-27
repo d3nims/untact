@@ -62,6 +62,32 @@ public class ReplyService {
 
 		return new ResultData("S-1", "댓글을 수정하였습니다.", "id", id);
 	}
+
+	public ResultData getActorCanReplyLike(int id, int actor) {
+		Reply reply = getReply(id);
+
+		if (reply.getMemberId() == actor) {
+			return new ResultData("F-1", "본인은 추천할 수 없습니다.");
+
+		}
+		// likePoint는 articleDao에 getLikePointByMemberId의 게시물id와 작성자actor의 값
+		int likePoint = replyDao.getLikePointByMemberId(id, actor);
+
+		// likePoint가 0보다 크면 "F-2", "이미 추천한 게시물입니다." 출력
+		if (likePoint > 0) {
+			return new ResultData("F-2", "이미 추천한 게시물입니다.");
+		}
+
+		return new ResultData("S-1", String.format("%d번 댓글을 추천하였습니다.", id));
+	
+	}
+
+	public ResultData likeReply(int id, int actor) {
+		replyDao.likeReply(id, actor);
+
+		return new ResultData("S-1", String.format("%d번 댓글을 추천하였습니다.", id), "id", id);
+
+	}
 }
 
 

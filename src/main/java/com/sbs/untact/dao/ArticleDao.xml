@@ -116,7 +116,6 @@
 		articleId = #{id},
 		memberId = #{memberId},
 		`point` = 1
-
 	</insert>
 	
 	<!-- 게시물 생성 -->

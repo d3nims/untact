@@ -23,6 +23,24 @@
 		AND R.id = #{id}
 	</select>
 	
+	<!-- 좋아요를 누른 멤버확인 -->
+	<select id="getLikePointByMemberId" resultType="int">
+		<!-- 만약null값이면 게시물의 추천point 값은 0으로 한다. -->
+		SELECT IFNULL(SUM(RL.point),0) AS `point`
+		FROM replyLike AS RL
+		WHERE RL.replyId = #{id}
+		AND RL.memberId = #{memberId}
+	</select>
+	
+	<!-- 좋아요 누른 여부 -->
+	<insert id="likeReply" parameterType="map">
+		INSERT INTO replyLike
+		SET regDate = NOW(),
+		replyId = #{id},
+		memberId = #{memberId},
+		`point` = 1
+	</insert>
+	
 	<delete id="deleteReply">
 		DELETE FROM reply
 		WHERE id = #{id}
