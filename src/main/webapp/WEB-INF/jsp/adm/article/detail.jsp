@@ -5,20 +5,12 @@
 <%@ include file="../part/mainLayoutHead.jspf"%>
 
 <c:set var="fileInputMaxCount" value="10" />
-
+<%@ include file="../part/head.jspf"%>
 <script>
-var addReplyFormData = new FormData(form);
-
-$.ajax({
-	url : '/adm/article/doAddReply',
-	data : addReplyFormData,
-	processData : false,
-	contentType : false,
-	dataType : "json",
-	type : 'POST',
-	success : onSuccess
-});
+	const id = parseInt('${article.id}');
+	const relTypeCode = String('${article.relTypeCode}');
 </script>
+
 <section class="section-1">
 	
 	<div class="bg-white shadow-md rounded container mx-auto p-8 mt-8">
@@ -113,19 +105,49 @@ $.ajax({
 
 					</button>
 				</span>
-				<form action="doAddReply" method="POST">
-					<input type="hidden" name="relTypeCode" value="article" />
-					<input type="hidden" name="relId" value="${param.id}" />
-						<div>
-							<textarea name="body" autofocus="autofocus" 
-	           		 		class="w-full py-2 pl-4 pr-10 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400 focus:bg-white focus:outline-none focus:border-blue-500 focus:text-gray-900 focus:shadow-outline-blue" 
-							style="border-radius: 25px"  placeholder="댓글을 입력해주세요." autocomplete="off"></textarea>
-						</div>
-						<div class="btns">
-							<input type="submit" class="btn-primary mt-3 bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded" value="등록">
-						</div>
+				<div>
+					<script>
+					function doAddReply__submitForm(form) {
+						form.body.value = form.body.value.trim();
 						
-				</form>	
+						if (form.body.value.length == 0) {
+							alert('댓글을 입력해주세요.');
+							form.body.focus();
+							
+							return;
+							
+							}
+							$.post('./doAddReplyAjax', {
+									relId : param.id,
+									relTypeCode : relTypeCode,
+									body:form.body.value
+								}, function(data) {
+									if( data.msg ) {
+										alert(data.msg);
+									}
+									
+									if ( data.resultCode.substr(0, 2) == 'S-' ) {
+										location.reload(); // 임시
+									}
+									
+								}, 'json');
+							
+							form.body.value = '';
+						}
+					</script>
+					<form action="" onsubmit="doAddReply__submitForm(this); return false;">
+					<input type="hidden" name="relTypeCode" value="article"/>
+							<div>
+								<textarea name="body" autofocus="autofocus" 
+		           		 		class="w-full py-2 pl-4 pr-10 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400 focus:bg-white focus:outline-none focus:border-blue-500 focus:text-gray-900 focus:shadow-outline-blue" 
+								style="border-radius: 25px"  placeholder="댓글을 입력해주세요." autocomplete="off"></textarea>
+							</div>
+							<div class="btns">
+								<input type="submit" class="btn-primary mt-3 bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded" value="등록">
+							</div>
+							
+					</form>
+				</div>
 				
 			</div>
 			

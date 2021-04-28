@@ -65,7 +65,7 @@ public class ArticleService {
 
 		int id = Util.getAsInt(param.get("id"), 0);
 
-		return new ResultData("S-1", "성공하였습니다.", "id", id);
+		return new ResultData("S-1", String.format("%d번 댓글을 작성하였습니다.", id), "id", id);
 
 	}
 

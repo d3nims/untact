@@ -18,6 +18,7 @@ public class Article extends EntityDto {
 	private int memberId;
 	private String title;
 	private String body;
+	private String relTypeCode;
 
 	private String extra__writer;
 	private String extra__likePoint;

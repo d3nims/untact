@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartRequest;
 
 import com.sbs.untact.dto.Article;
@@ -150,6 +151,20 @@ public class AdmArticleController extends BaseController {
 		
 		return msgAndReplace(req, String.format("%d번 댓글이 작성되었습니다.", newReplyId),
 				"../article/detail?id=" + param.get("relId"));
+		
+
+	}
+	
+	@RequestMapping("/adm/article/doAddReplyAjax")
+	@ResponseBody
+	public ResultData doAddReplyAjax(@RequestParam Map<String, Object> param, HttpServletRequest req) {
+		int loginedMemberId = (int) req.getAttribute("loginedMemberId");
+
+		param.put("memberId", loginedMemberId);
+		
+		ResultData addReplyRd = articleService.addReply(param);
+
+		return addReplyRd;
 		
 
 	}
@@ -303,35 +318,4 @@ public class AdmArticleController extends BaseController {
 		return msgAndReplace(req,actorCanLike.getMsg(), redirectUrl);
 	}
 	
-//	@RequestMapping("/adm/article/doLike")
-//	public String doLike(@RequestParam Map<String, Object> param, int id, HttpServletRequest req) {
-//
-//		int loginedMemberId = (int) req.getAttribute("loginedMemberId");
-//
-//		
-//		Map<String, Object> like = articleService.likeArticle(id, loginedMemberId);
-//		
-//		Map<String, Object> actorCanLike = articleService.getActorCanLike(id, loginedMemberId);
-//		
-//		ResultData actorCanLikerd = (ResultData) articleService.getActorCanLikerd(id, loginedMemberId);
-//		
-//		String msg = (String) like.get("msg");
-//		
-//		String redirectUrl = "/adm/article/detail?id=" + param.get("id");
-//
-//		if (((String) actorCanLike.get("resultCode")).startsWith("F-")) {
-//
-//			req.setAttribute("alertMsg", actorCanLike.get("msg"));
-//			req.setAttribute("historyBack", true);
-//			
-//			return "common/redirect";
-//		}
-//
-//		req.setAttribute("alertMsg", msg);
-//
-//		
-//		return msgAndReplace(req,((ResultData) actorCanLike).getMsg(), redirectUrl);
-//	}
-
 }
-
