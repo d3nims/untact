@@ -5,7 +5,7 @@
 <%@ include file="../part/mainLayoutHead.jspf"%>
 
 <c:set var="fileInputMaxCount" value="10" />
-<%@ include file="../part/head.jspf"%>
+
 <script>
 	const id = parseInt('${article.id}');
 	const relTypeCode = String('${article.relTypeCode}');
@@ -105,8 +105,12 @@
 
 					</button>
 				</span>
+				
+			</div>
 				<div>
 					<script>
+
+					<!-- 댓글 작성 ajax -->
 					function doAddReply__submitForm(form) {
 						form.body.value = form.body.value.trim();
 						
@@ -115,12 +119,12 @@
 							form.body.focus();
 							
 							return;
-							
+
 							}
 							$.post('./doAddReplyAjax', {
 									relId : param.id,
-									relTypeCode : relTypeCode,
-									body:form.body.value
+									relTypeCode : form.relTypeCode.value,
+									body : form.body.value
 								}, function(data) {
 									if( data.msg ) {
 										alert(data.msg);
@@ -149,9 +153,67 @@
 					</form>
 				</div>
 				
-			</div>
 			
+			<div>
 			<span>댓글</span>
+				<script>
+				<!-- 댓글 리스트 ajax -->
+				function ReplyList__submitForm(form) {
+					$.post('./repliesListAjax', {
+						relTypeCode : form.relTypeCode.value
+					}),
+
+					$.get('./repliesListAjax', {
+						id : param.id,
+						relTypeCode : form.relTypeCode.value
+						},function(data) {
+							for (var i = 0; i < data.replies.length; i++) {
+								var articleReply = data.replies[i];
+								ReplyList__drawReply(articleReply);
+							}
+						},'json');
+				}
+				
+				var ReplyList__$listTbody;
+				
+				function ReplyList__drawReply(articleReply) {
+					var html = '';
+
+					
+					html = '<tr data-article-reply-id="' + reply.id + '">';
+					html += '<td>' + reply.id + '</td>';
+					html += '<td>' + reply.regDate + '</td>';
+					html += '<td>' + reply.extra__writer + '</td>';
+					html += '<td>' + reply.body + '</td>';
+					html += '<td>';
+					html += '<a href="#">삭제</a>';
+					html += '<a href="#">수정</a>';
+					html += '</td>';
+					html += '</tr>';
+					
+					ReplyList__$listTbody.prepend(html);
+				}
+				
+				$(function() {
+					ReplyList__$listTbody = $('.article-reply-list-box > table tbody');
+					
+					ReplyList__submitForm();
+				});
+				</script>
+				<div class="article-reply-list-box table-box con">
+						<table>
+							<tbody>
+								
+							</tbody>
+						</table>
+				</div>
+				<form action="" onsubmit="ReplyList__submitForm(this); return false;">
+					<input type="hidden" name="relTypeCode" value="article"/>
+				</form>
+				
+				
+			</div>
+			<%-- 
 			<c:forEach items="${replies}" var="reply">
 			<div class="flex-grow px-1">
                   <div class="flex text-gray-400 text-light text-sm mt-3 flex w-full border-t border-gray-100">
@@ -164,6 +226,9 @@
                   </div>
               </div>
               <div class="mt-3 flex flex-row">
+              --%>
+              
+             	 <%-- 
 	              <div class=mr-3>
 	              		<div>
 							<textarea name="body" autofocus="autofocus" 
@@ -178,6 +243,8 @@
 							</a>
 						</div>
 					</div>
+					--%>
+					
 					<div class=mr-3>
 							<a onclick="if ( !confirm('추천하시겠습니까?') ) return false;" href="/adm/reply/doLike?id=${reply.id}" class="ml-2 text-blue-500 hover:underline">
 								<span>
@@ -186,6 +253,7 @@
 								</span>
 							</a>
 					</div>
+					
 					<div>
 						<a onclick="if ( !confirm('삭제하시겠습니까?') ) return false;" href="/adm/reply/doDelete?id=${reply.id}" class="ml-2 text-red-500 hover:underline">
 							<span>
@@ -194,13 +262,15 @@
 							</span>
 						</a>
 					</div>
-				</div>
+					
+					
+					
 	
-				
-			</c:forEach>
+			
+			<%-- </c:forEach> --%>
 			
 		</div>
-		</div>
+		
 	
 
 	<!--

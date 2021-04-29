@@ -62,6 +62,18 @@ public class AdmArticleController extends BaseController {
 
 		return "adm/article/detail";
 	}
+	
+	@RequestMapping("/adm/article/repliesListAjax")
+	@ResponseBody
+	public ResultData repliesListAjax(HttpServletRequest req, int id) {
+		List<Reply> replies = replyService.getForPrintReplies("article",id);
+		
+		req.setAttribute("data", replies);
+		
+		return new ResultData("S-1", String.format("총 %d개의 댓글이 있습니다.", replies.size()));
+	
+	}
+	
 
 	@RequestMapping("/adm/article/list")
 	public String showList(HttpServletRequest req, @RequestParam(defaultValue = "1") int boardId,

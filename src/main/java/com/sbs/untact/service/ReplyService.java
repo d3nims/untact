@@ -88,6 +88,7 @@ public class ReplyService {
 		return new ResultData("S-1", String.format("%d번 댓글을 추천하였습니다.", id), "id", id);
 
 	}
+
 }
 
 
