@@ -155,63 +155,66 @@
 				
 			
 			<div>
-			<span>댓글</span>
-				<script>
-				<!-- 댓글 리스트 ajax -->
-				function ReplyList__submitForm(form) {
-					$.post('./repliesListAjax', {
-						relTypeCode : form.relTypeCode.value
-					}),
-
-					$.get('./repliesListAjax', {
-						id : param.id,
-						relTypeCode : form.relTypeCode.value
-						},function(data) {
-							for (var i = 0; i < data.replies.length; i++) {
-								var articleReply = data.replies[i];
-								ReplyList__drawReply(articleReply);
-							}
-						},'json');
-				}
-				
-				var ReplyList__$listTbody;
-				
-				function ReplyList__drawReply(articleReply) {
-					var html = '';
-
-					
-					html = '<tr data-article-reply-id="' + reply.id + '">';
-					html += '<td>' + reply.id + '</td>';
-					html += '<td>' + reply.regDate + '</td>';
-					html += '<td>' + reply.extra__writer + '</td>';
-					html += '<td>' + reply.body + '</td>';
-					html += '<td>';
-					html += '<a href="#">삭제</a>';
-					html += '<a href="#">수정</a>';
-					html += '</td>';
-					html += '</tr>';
-					
-					ReplyList__$listTbody.prepend(html);
-				}
-				
-				$(function() {
-					ReplyList__$listTbody = $('.article-reply-list-box > table tbody');
-					
-					ReplyList__submitForm();
-				});
-				</script>
-				<div class="article-reply-list-box table-box con">
-						<table>
-							<tbody>
-								
-							</tbody>
-						</table>
-				</div>
+				<span>댓글</span>
 				<form action="" onsubmit="ReplyList__submitForm(this); return false;">
-					<input type="hidden" name="relTypeCode" value="article"/>
+					<input type="hidden" name="relTypeCode" id="relTypeCode" value="article"/>
 				</form>
-				
-				
+					<script>
+					<!-- 댓글 리스트 ajax -->
+					function ReplyList__submitForm(form) {
+
+						
+						var params = $("#relTypeCode").serialize();
+
+						$.get('./repliesListAjax', {
+
+							id : param.id,
+							relTypeCode : params
+							},function(data) {
+								for (var i = 0; i < data.replies.length; i++) {
+									var articleReply = data.replies[i];
+									ReplyList__drawReply(articleReply);
+								}
+							},'json');
+					
+					}
+					
+					var ReplyList__$listTbody;
+					
+					function ReplyList__drawReply(articleReply) {
+						var html = '';
+	
+						
+						html = '<tr data-article-reply-id="' + reply.id + '">';
+						html += '<td>' + reply.id + '</td>';
+						html += '<td>' + reply.regDate + '</td>';
+						html += '<td>' + reply.extra__writer + '</td>';
+						html += '<td>' + reply.body + '</td>';
+						html += '<td>';
+						html += '<a href="#">삭제</a>';
+						html += '<a href="#">수정</a>';
+						html += '</td>';
+						html += '</tr>';
+						
+						ReplyList__$listTbody.prepend(html);
+					}
+					
+					$(function() {
+						ReplyList__$listTbody = $('.article-reply-list-box > table tbody');
+						
+						ReplyList__submitForm();
+					});
+					</script>
+					<div class="article-reply-list-box table-box con">
+							<table>
+								<tbody>
+									
+								</tbody>
+							</table>
+					</div>
+					
+					
+					
 			</div>
 			<%-- 
 			<c:forEach items="${replies}" var="reply">
@@ -298,7 +301,7 @@
 			</div>
 		</form>
 		-->
-
+	</div>
 </section>
 
 <%@ include file="../part/mainLayoutFoot.jspf"%>
