@@ -94,9 +94,14 @@ public class BoardService {
 			
 	}
 
-	public Board getBoardByName(String name, String code) {
+	public Board getBoardByName(String name) {
 		
-		return boardDao.getBoardByName(name, code);
+		return boardDao.getBoardByName(name);
+	}
+	
+	public Board getBoardByCode(String code) {
+		
+		return boardDao.getBoardByCode(code);
 	}
 
 	

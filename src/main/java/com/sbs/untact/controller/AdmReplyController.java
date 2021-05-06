@@ -58,15 +58,15 @@ public class AdmReplyController extends BaseController{
 	
 	
 	@RequestMapping("/adm/reply/doDelete")
-	public String doDelete(@RequestParam Map<String, Object> param, Integer id,  HttpServletRequest req) {
+	public String doDelete(@RequestParam Map<String, Object> param, int id, HttpServletRequest req) {
 		int loginedMemberId = (int)req.getAttribute("loginedMemberId");
 		
-		Article article = articleService.getForPrintArticle(id);
 		
 		if (param.get("id") == null) {
 			return msgAndBack(req, "id를 입력해주세요.");
 		}
 
+		
 		Reply reply = replyService.getReply(id);
 
 		if (reply == null) {
@@ -77,14 +77,16 @@ public class AdmReplyController extends BaseController{
 		ResultData actorCanDeleteRd = replyService.getActorCanDeleteRd(reply, loginedMemberId);
 		
 		ResultData rd = replyService.deleteReply(id);
-	
 		
-		if ( rd.isFail() ) {
-			return msgAndBack(req,rd.getMsg());
+	
+		if ( actorCanDeleteRd.isFail() ) {
+			return msgAndBack(req,actorCanDeleteRd.getMsg());
 		}
 
+	
+		
 		return msgAndReplace(req, String.format("%d번 댓글이 삭제되었습니다.", id),
-				"../article/detail?id=" + param.get("relId"));
+				"../article/detail?id=" + reply.getRelId());
 	}
 	
 	

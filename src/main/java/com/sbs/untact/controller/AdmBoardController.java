@@ -157,7 +157,8 @@ public class AdmBoardController extends BaseController {
 	public String doAdd(@RequestParam Map<String, Object> param, HttpServletRequest req, String name, String code) {
 		int loginedMemberId = (int) req.getAttribute("loginedMemberId");
 
-		Board existingBoard = boardService.getBoardByName(name, code);
+		Board existingBoardN = boardService.getBoardByName(name);
+		Board existingBoardC = boardService.getBoardByCode(code);
 		
 		
 		if (Util.isEmpty(param.get("name"))) {
@@ -169,8 +170,12 @@ public class AdmBoardController extends BaseController {
 		}
 
 		
-		if (existingBoard != null) {
+		if (existingBoardN != null) {
 			return msgAndBack(req, String.format("%s(은)는 이미 사용중인 게시판이름 입니다.", name));
+		}
+		
+		if (existingBoardC != null) {
+			return msgAndBack(req, String.format("%s(은)는 이미 사용중인 게시판코드 입니다.", code));
 		}
 		
 
@@ -237,7 +242,7 @@ public class AdmBoardController extends BaseController {
 
 		Board board = boardService.getBoard(id);
 
-		Board existingBoard = boardService.getBoardByName(name, code);
+		Board existingBoard = boardService.getBoardByName(name);
 
 		if (board == null) {
 			return msgAndBack(req, "해당 게시판은 존재하지 않습니다.");

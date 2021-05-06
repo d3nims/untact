@@ -6,13 +6,15 @@
 
 <c:set var="fileInputMaxCount" value="10" />
 
+<%@ include file="../part/head.jspf"%>
 <script>
+
 	const id = parseInt('${article.id}');
 	const relTypeCode = String('${article.relTypeCode}');
 </script>
 
 <section class="section-1">
-	
+
 	<div class="bg-white shadow-md rounded container mx-auto p-8 mt-8">
 		<div class="w-full">
 			<div class="flex flex-row mt-2 py-3">
@@ -50,7 +52,7 @@
 					<img class="inline-block object-cover w-8 h-8 -ml-2 text-white border-2 border-white rounded-full shadow-sm cursor-pointer" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=2.25&amp;w=256&amp;h=256&amp;q=80" alt="">
 				</div>
 				
-				<div class="flex justify-end w-full mt-1 pt-2">
+				<div class="flex justify-end w-full mt-3 pt-2">
 					<div class=mr-3>
 					<span>${article.extra.likePoint}</span>
 						<a onclick="if ( !confirm('추천하시겠습니까?') ) return false;" href="/adm/article/doLike?id=${article.id}" class="ml-2 text-blue-500 hover:underline">
@@ -95,22 +97,15 @@
 							</div>
 						</div>
 					</div>
-			<div class="relative flex items-center self-center w-full max-w-xl py-4 text-gray-600 focus-within:text-gray-400">
+			<div class="relative flex items-center self-center text-gray-600 focus-within:text-gray-400">
 				<img class="w-10 h-10 object-cover rounded-full shadow mr-2 cursor-pointer" alt="User avatar" src="https://images.unsplash.com/photo-1477118476589-bff2c5c4cfbb?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=200&amp;q=200">
-				<span class="absolute inset-y-0 right-0 flex items-center pr-6">
+				<span class="">
 					<button type="submit" class="p-1 focus:outline-none focus:shadow-none hover:text-blue-500">
-						<svg class="w-6 h-6 transition ease-out duration-300 hover:text-blue-500 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                   			<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                		</svg>
 
 					</button>
 				</span>
-				
-			</div>
 				<div>
 					<script>
-
-					<!-- 댓글 작성 ajax -->
 					function doAddReply__submitForm(form) {
 						form.body.value = form.body.value.trim();
 						
@@ -119,7 +114,7 @@
 							form.body.focus();
 							
 							return;
-
+							
 							}
 							$.post('./doAddReplyAjax', {
 									relId : param.id,
@@ -139,8 +134,24 @@
 							form.body.value = '';
 						}
 					</script>
+					<form action="" onsubmit="doAddReply__submitForm(this); return false;" class="relative flex py-4 text-gray-600 focus-within:text-gray-400">
+			            <input type="hidden" name="relTypeCode" value="article"/>
+			            
+			            <span class="absolute inset-y-0 right-0 flex items-center pr-3">
+			              <button type="submit" class="p-1 focus:outline-none focus:shadow-none hover:text-blue-500">
+			                <i class="fas fa-comment-dots"></i>
+			              </button>
+			            </span>
+			            
+			            <input name="body" type="text" class="w-full py-2 pl-4 pr-10 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400 focus:bg-white focus:outline-none focus:border-blue-500 focus:text-gray-900 focus:shadow-outline-blue"
+			            style="border-radius: 25px" placeholder="댓글을 입력해주세요." autocomplete="off">
+			          </form>
+			          
+			          
+			         <!-- 
 					<form action="" onsubmit="doAddReply__submitForm(this); return false;">
 					<input type="hidden" name="relTypeCode" value="article"/>
+							
 							<div>
 								<textarea name="body" autofocus="autofocus" 
 		           		 		class="w-full py-2 pl-4 pr-10 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400 focus:bg-white focus:outline-none focus:border-blue-500 focus:text-gray-900 focus:shadow-outline-blue" 
@@ -149,74 +160,14 @@
 							<div class="btns">
 								<input type="submit" class="btn-primary mt-3 bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded" value="등록">
 							</div>
-							
+
 					</form>
+					-->
 				</div>
-				
-			
-			<div>
-				<span>댓글</span>
-				<form action="" onsubmit="ReplyList__submitForm(this); return false;">
-					<input type="hidden" name="relTypeCode" id="relTypeCode" value="article"/>
-				</form>
-					<script>
-					<!-- 댓글 리스트 ajax -->
-					function ReplyList__submitForm(form) {
 
-						
-						var params = $("#relTypeCode").serialize();
-
-						$.get('./repliesListAjax', {
-
-							id : param.id,
-							relTypeCode : params
-							},function(data) {
-								for (var i = 0; i < data.replies.length; i++) {
-									var articleReply = data.replies[i];
-									ReplyList__drawReply(articleReply);
-								}
-							},'json');
-					
-					}
-					
-					var ReplyList__$listTbody;
-					
-					function ReplyList__drawReply(articleReply) {
-						var html = '';
-	
-						
-						html = '<tr data-article-reply-id="' + reply.id + '">';
-						html += '<td>' + reply.id + '</td>';
-						html += '<td>' + reply.regDate + '</td>';
-						html += '<td>' + reply.extra__writer + '</td>';
-						html += '<td>' + reply.body + '</td>';
-						html += '<td>';
-						html += '<a href="#">삭제</a>';
-						html += '<a href="#">수정</a>';
-						html += '</td>';
-						html += '</tr>';
-						
-						ReplyList__$listTbody.prepend(html);
-					}
-					
-					$(function() {
-						ReplyList__$listTbody = $('.article-reply-list-box > table tbody');
-						
-						ReplyList__submitForm();
-					});
-					</script>
-					<div class="article-reply-list-box table-box con">
-							<table>
-								<tbody>
-									
-								</tbody>
-							</table>
-					</div>
-					
-					
-					
 			</div>
-			<%-- 
+
+			<span>댓글</span>
 			<c:forEach items="${replies}" var="reply">
 			<div class="flex-grow px-1">
                   <div class="flex text-gray-400 text-light text-sm mt-3 flex w-full border-t border-gray-100">
@@ -229,15 +180,8 @@
                   </div>
               </div>
               <div class="mt-3 flex flex-row">
-              --%>
-              
-             	 <%-- 
 	              <div class=mr-3>
 	              		<div>
-							<textarea name="body" autofocus="autofocus" 
-	           		 		class="w-full py-2 pl-4 pr-10 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400 focus:bg-white focus:outline-none focus:border-blue-500 focus:text-gray-900 focus:shadow-outline-blue" 
-							style="border-radius: 25px"  placeholder="댓글을 입력해주세요." autocomplete="off"></textarea>
-						
 							<a href="/adm/reply/doModify?id=${reply.id}" class="ml-2 text-green-500 hover:underline">
 								<span>
 									<i class="fas fa-edit"></i>
@@ -246,8 +190,6 @@
 							</a>
 						</div>
 					</div>
-					--%>
-					
 					<div class=mr-3>
 							<a onclick="if ( !confirm('추천하시겠습니까?') ) return false;" href="/adm/reply/doLike?id=${reply.id}" class="ml-2 text-blue-500 hover:underline">
 								<span>
@@ -256,7 +198,6 @@
 								</span>
 							</a>
 					</div>
-					
 					<div>
 						<a onclick="if ( !confirm('삭제하시겠습니까?') ) return false;" href="/adm/reply/doDelete?id=${reply.id}" class="ml-2 text-red-500 hover:underline">
 							<span>
@@ -265,17 +206,14 @@
 							</span>
 						</a>
 					</div>
-					
-					
-					
+				</div>
 	
-			
-			<%-- </c:forEach> --%>
+				
+			</c:forEach>
 			
 		</div>
-		
+		</div>
 	
-
 	<!--
 		<div>
 			<div class="form-row flex flex-col lg:flex-row">
@@ -301,7 +239,5 @@
 			</div>
 		</form>
 		-->
-	</div>
 </section>
-
 <%@ include file="../part/mainLayoutFoot.jspf"%>

@@ -55,7 +55,14 @@
 			WHERE
 			name = #{name}
 
+	</select>
 	
+	<select id="getBoardByCode" resultType="Board">
+			SELECT *
+			FROM board
+			WHERE
+			code = #{code}
+
 	</select>
 	
 	<insert id="addBoard" useGeneratedKeys="true" keyProperty="id">
@@ -64,8 +71,7 @@
 			updateDate = NOW(),
 			name = #{name},
 			code = #{code}
-			
-			
+
 	</insert>
 	
 	<delete id="deleteBoard">
