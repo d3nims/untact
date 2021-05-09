@@ -6,7 +6,9 @@
 
 <section class="section-1">
 	<div class="bg-white shadow-md rounded container mx-auto p-8 mt-8">
-		
+		<div class="container mx-auto h-full flex m-0">
+			<a class="text-4xl text-gray-700 font-bold">회원 관리</a>
+		</div>
 		<div class="flex">
 			<select class="py-2 select-auth-level">
 				<option value="">권한전체</option>
@@ -49,21 +51,16 @@
 					</a>
 				</div>
 				<div class="flex items-center mt-4">
-					<a href="detail?id=${member.id}" class="text-blue-500 hover:underline" title="자세히 보기">
+					
+					<a href="modify?id=${member.id}" class="ml-2 text-black-500 hover:underline">
 						<span>
-							<i class="fas fa-info"></i>
-							<span class="hidden sm:inline">자세히 보기</span>
-						</span>
-					</a>
-					<a href="modify?id=${member.id}" class="ml-2 text-blue-500 hover:underline">
-						<span>
-							<i class="fas fa-edit"></i>
+							<i class="fas fa-edit" style="color:LimeGreen"></i>
 							<span class="hidden sm:inline">수정</span>
 						</span>
 					</a>
-					<a onclick="if ( !confirm('삭제하시겠습니까?') ) return false;" href="doDelete?id=${member.id}" class="ml-2 text-blue-500 hover:underline">
+					<a onclick="if ( !confirm('삭제하시겠습니까?') ) return false;" href="doDelete?id=${member.id}" class="ml-2 text-black-500 hover:underline">
 						<span>
-							<i class="fas fa-trash"></i>
+							<i class="fas fa-trash" style="color:red"></i>
 							<span class="hidden sm:inline">삭제</span>
 						</span>
 					</a>

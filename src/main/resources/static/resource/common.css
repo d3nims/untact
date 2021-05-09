@@ -1,4 +1,9 @@
-
+@font-face {
+    font-family: 'InfinitySans-RegularA1';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/InfinitySans-RegularA1.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 
 @font-face {
   font-family: 'LotteMartDream';
@@ -20,8 +25,10 @@
   font-weight: 300;
   src: url('https://cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamLight.woff2') format('woff2'), url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamLight.woff') format('woff');
 }
+
+
 html > body {
- font-family: 'LotteMartDream', sans-serif;
+ font-family: 'InfinitySans-RegularA1', sans-serif;
 }
 
 .logo {
@@ -30,8 +37,37 @@ html > body {
 }
 
 .logo > span:last-child {
-  font-style:italic;
   margin-left:0.5rem;
   font-weight:bold;
 } 
+
+.home-1:hover {
+  color: white;
+  background-color: black;
+}
+
+.board-1:hover {
+  color: white;
+  background-color: black;
+}
+
+.member-1:hover {
+  color: white;
+  background-color: black;
+}
+
+.article-1:hover {
+  color: white;
+  background-color: black;
+}
+
+.logout-1:hover {
+  color: white;
+  background-color: black;
+}
+
+.mainsection-1 {
+	text-align: center;
+}
+
 

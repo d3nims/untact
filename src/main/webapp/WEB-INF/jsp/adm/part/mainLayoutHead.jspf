@@ -5,42 +5,43 @@
 	<div class="container mx-auto h-full flex">
 		<a href="/adm/home/main" class="logo flex items-center ml-2">
 			<span>
-				<i class="fas fa-people-arrows"></i>
+				<i class="fas fa-users-cog"></i>
 			</span>
-			<span>THE.H</span>
+			<span>THE Blog - ADMIN</span>
 		</a>
 
 		<div class="flex-grow"></div>
 
 		<nav class="menu-box-1">
 			<ul class="flex h-full">
-			    <li>
-					<a class="text-xl px-4 flex items-center h-full hover:underline" href="/adm/home/main">
+			    <li class="home-1">
+					<a class="text-xl px-4 flex items-center h-full" href="/adm/home/main">
 						<span>관리자 홈</span>
 					</a>
 				</li>
-				<li>
-					<a class="text-xl px-4 flex items-center h-full hover:underline" href="/adm/board/list">
+				<li class="board-1">
+					<a class="text-xl px-4 flex items-center h-full" href="/adm/board/list">
 						<span>게시판 관리</span>
 					</a>
 				</li>
-				<li>
-					<a class="text-xl px-4 flex items-center h-full hover:underline" href="/adm/member/list">
+				<li class="member-1">
+					<a class="text-xl px-4 flex items-center h-full" href="/adm/member/list">
 						<span>회원 관리</span>
 					</a>
 				</li>
 				
-				<li>
-					<a class="text-xl px-4 flex items-center h-full hover:underline" href="/adm/article/list?boardId=1">
+				<li class="article-1">
+					<a class="text-xl px-4 flex items-center h-full" href="/adm/article/list?boardId=1">
 						<span>게시물 관리</span>
 					</a>
 				</li>
-				<li>
-					<a class="text-xl px-4 flex items-center h-full hover:underline" href="/adm/member/doLogout">
+				<li class="logout-1">
+					<a class="text-xl px-4 flex items-center h-full" href="/adm/member/doLogout">
 						<span>관리자 로그아웃</span>
 					</a>
 				</li>
 			</ul>
+			
 		</nav>
 	</div>
 </header>

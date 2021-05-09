@@ -182,26 +182,26 @@
               <div class="mt-3 flex flex-row">
 	              <div class=mr-3>
 	              		<div>
-							<a href="/adm/reply/doModify?id=${reply.id}" class="ml-2 text-green-500 hover:underline">
+							<a href="/adm/reply/doModify?id=${reply.id}" class="ml-2 text-black-500 hover:underline">
 								<span>
-									<i class="fas fa-edit"></i>
+									<i class="fas fa-edit" style="color:LimeGreen"></i>
 									<span class="hidden sm:inline">수정</span>
 								</span>
 							</a>
 						</div>
 					</div>
 					<div class=mr-3>
-							<a onclick="if ( !confirm('추천하시겠습니까?') ) return false;" href="/adm/reply/doLike?id=${reply.id}" class="ml-2 text-blue-500 hover:underline">
+							<a onclick="if ( !confirm('추천하시겠습니까?') ) return false;" href="/adm/reply/doLike?id=${reply.id}" class="ml-2 text-black-500 hover:underline">
 								<span>
-									<i class="far fa-heart"></i>
+									<i class="far fa-heart" style="color:DodgerBlue"></i>
 									<span class="hidden sm:inline">좋아요</span>
 								</span>
 							</a>
 					</div>
 					<div>
-						<a onclick="if ( !confirm('삭제하시겠습니까?') ) return false;" href="/adm/reply/doDelete?id=${reply.id}" class="ml-2 text-red-500 hover:underline">
+						<a onclick="if ( !confirm('삭제하시겠습니까?') ) return false;" href="/adm/reply/doDelete?id=${reply.id}" class="ml-2 text-black-500 hover:underline">
 							<span>
-								<i class="fas fa-trash"></i>
+								<i class="fas fa-trash" style="color:red"></i>
 								<span class="hidden sm:inline">삭제</span>
 							</span>
 						</a>

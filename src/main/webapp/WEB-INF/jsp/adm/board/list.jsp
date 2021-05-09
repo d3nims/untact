@@ -68,21 +68,21 @@
 				</div>
 					
 					<div class="flex items-center mt-4">
-						<a href="${detailUrl}" class="text-blue-500 hover:underline">
+						<a href="${detailUrl}" class="text-black-500 hover:underline">
 							<span>
-								<i class="fas fa-info"></i>
+								<i class="fas fa-info" style="color:DodgerBlue"></i>
 								<span class="hidden sm:inline">자세히 보기</span>
 							</span>
 						</a>
-						<a href="${modifyUrl}" class="ml-2 text-green-500 hover:underline">
+						<a href="${modifyUrl}" class="ml-2 text-black-500 hover:underline">
 							<span>
-								<i class="fas fa-edit"></i>
+								<i class="fas fa-edit" style="color:LimeGreen"></i>
 								<span class="hidden sm:inline">수정</span>
 							</span>
 						</a>
-						<a onclick="if ( !confirm('삭제하시겠습니까?') ) return false;" href="${doDeleteUrl}" class="ml-2 text-red-500 hover:underline">
+						<a onclick="if ( !confirm('삭제하시겠습니까?') ) return false;" href="${doDeleteUrl}" class="ml-2 text-black-500 hover:underline">
 							<span>
-								<i class="fas fa-trash"></i>
+								<i class="fas fa-trash" style="color:red"></i>
 								<span class="hidden sm:inline">삭제</span>
 							</span>
 						</a>

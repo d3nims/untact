@@ -77,9 +77,26 @@
 					<a href="${detailUrl}" class="mt-2 text-gray-600 block">${article.body}</a>
 				</div>
 				<div class="flex items-center mt-4">
-					<a href="detail?id=${article.id}" class="text-blue-500 hover:underline">자세히 보기</a>
-					<a href="modify?id=${article.id}" class="ml-2 text-blue-500 hover:underline">수정</a>
-					<a onclick="if ( !confirm('삭제하시겠습니까?') ) return false;" href="doDelete?id=${article.id}" class="ml-2 text-blue-500 hover:underline">삭제</a>
+					<a href="detail?id=${article.id}" class="text-black-500 hover:underline">
+						<span>
+							<i class="fas fa-info" style="color:DodgerBlue"></i>
+							<span class="hidden sm:inline">자세히 보기</span>
+						</span>
+					</a>
+					
+					<a href="modify?id=${article.id}" class="ml-2 text-black-500 hover:underline">
+						<span>
+							<i class="fas fa-edit" style="color:LimeGreen"></i>
+							<span class="hidden sm:inline">수정</span>
+						</span>
+					</a>
+					
+					<a onclick="if ( !confirm('삭제하시겠습니까?') ) return false;" href="doDelete?id=${article.id}" class="ml-2 text-black-500 hover:underline">
+						<span>
+							<i class="fas fa-trash" style="color:red"></i>
+							<span class="hidden sm:inline">삭제</span>
+						</span>
+					</a>
 					<div class="flex-grow"></div>
 					<div>
 						<a class="flex items-center">
