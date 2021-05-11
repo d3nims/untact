@@ -1,5 +1,6 @@
 package com.sbs.untact.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,11 +13,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sbs.untact.dto.Article;
+import com.sbs.untact.dto.GenFile;
 import com.sbs.untact.dto.Member;
 import com.sbs.untact.dto.Reply;
 import com.sbs.untact.dto.ResultData;
 import com.sbs.untact.service.ArticleService;
 import com.sbs.untact.service.ReplyService;
+import com.sbs.untact.util.Util;
 
 
 @Controller
@@ -91,35 +94,51 @@ public class AdmReplyController extends BaseController{
 	
 	
 	
-	@RequestMapping("/adm/reply/doModify")
-	@ResponseBody
-	public ResultData doModify(Integer id, String title, String body, HttpServletRequest req) {
-		int loginedMemberId = (int)req.getAttribute("loginedMemberId");
 
+	
+	@RequestMapping("/adm/reply/modify")
+    public String showModify(HttpServletRequest req, int id, String redirectUri) {
+        Reply reply = replyService.getReply(id);
 
-		if (id == null) {
-			return new ResultData("F-1", "id를 입력해주세요.");
+        int loginedMemberId = (int) req.getAttribute("loginedMemberId");
+        
+        if ( reply == null ) {
+            return msgAndBack(req, "존재하지 않는 댓글입니다.");
+        }
+
+        ResultData actorCanReplyReply = replyService.getActorCanModifyRd(reply, loginedMemberId);
+		if (((ResultData) actorCanReplyReply).isFail()) {
+			return msgAndBack(req,actorCanReplyReply.getMsg());
 		}
 
-		if (body == null) {
-			return new ResultData("F-1", "body를 입력해주세요.");
+        req.setAttribute("reply", reply);
+
+        return "adm/reply/modify";
+    }
+
+    @RequestMapping("/adm/reply/doModify")
+    public String doModify(@RequestParam Map<String, Object> param, HttpServletRequest req, int id, String body) {
+        Reply reply = replyService.getReply(id);
+        
+        int loginedMemberId = (int) req.getAttribute("loginedMemberId");
+
+        if ( reply == null ) {
+            return msgAndBack(req, "존재하지 않는 댓글입니다.");
+        }
+        ResultData modifyResultData = replyService.modifyReply(id, body);
+        
+        ResultData actorCanReply = replyService.getActorCanModifyRd(reply, loginedMemberId);
+		if (((ResultData) actorCanReply).isFail()) {
+			return msgAndBack(req,actorCanReply.getMsg());
 		}
+        
+        String redirectUrl = "/adm/article/detail?id=" + reply.getRelId();
 
-		Reply reply = replyService.getReply(id);
-
-		if (reply == null) {
-			return new ResultData("F-1", "해당 댓글은 존재하지 않습니다.");
-		}
-
-		ResultData actorCanModifyRd = replyService.getActorCanModifyRd(reply, loginedMemberId);
-
-		if ( actorCanModifyRd.isFail() ) {
-			return actorCanModifyRd;
-		}
-
-
-		return replyService.modifyReply(id, body);
-	}
+        return msgAndReplace(req,modifyResultData.getMsg(), redirectUrl);
+       
+    }
+    
+   
 	
 	@RequestMapping("/adm/reply/doLike")
 	public String doLike(@RequestParam Map<String, Object> param, int id, HttpServletRequest req) {

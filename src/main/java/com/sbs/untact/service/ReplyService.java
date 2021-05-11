@@ -52,15 +52,21 @@ public class ReplyService {
 	
 
 
-	public ResultData getActorCanModifyRd(Reply reply, int actorId) {
+	public ResultData getActorCanModifyRd(Reply reply, int actor) {
 		
-		return getActorCanDeleteRd(reply, actorId);
+		if (reply.getMemberId() != actor) {
+			return new ResultData("F-1", "권한이 없습니다.");
+
+		}
+		
+		return getActorCanDeleteRd(reply, actor);
 	}
 
 	public ResultData modifyReply(int id, String body) {
+
 		replyDao.modifyReply(id, body);
 
-		return new ResultData("S-1", "댓글을 수정하였습니다.", "id", id);
+		return new ResultData("S-1", id + "번 댓글을 수정하였습니다.", "id", id);
 	}
 
 	public ResultData getActorCanReplyLike(int id, int actor) {

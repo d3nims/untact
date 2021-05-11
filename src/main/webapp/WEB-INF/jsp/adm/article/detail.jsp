@@ -182,7 +182,7 @@
               <div class="mt-3 flex flex-row">
 	              <div class=mr-3>
 	              		<div>
-							<a href="/adm/reply/doModify?id=${reply.id}" class="ml-2 text-black-500 hover:underline">
+							<a href="/adm/reply/modify?id=${reply.id}" class="ml-2 text-black-500 hover:underline">
 								<span>
 									<i class="fas fa-edit" style="color:LimeGreen"></i>
 									<span class="hidden sm:inline">수정</span>
