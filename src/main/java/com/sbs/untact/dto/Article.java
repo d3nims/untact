@@ -25,14 +25,7 @@ public class Article extends EntityDto {
 	private String extra__boardName;
 	private String extra__thumbImg;
 	
-	private Map<String, Object> extra;
-	public Map<String, Object> getExtraNotNull() {
-		if ( extra == null ) {
-			extra = new HashMap<String, Object>();
-		}
-
-		return extra;
-	}
+	
 	
 	public String getWriterThumbImgUrl() {
 		return "/common/genFile/file/member/" + memberId + "/common/attachment/1";

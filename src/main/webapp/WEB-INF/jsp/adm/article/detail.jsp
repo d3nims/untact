@@ -14,7 +14,6 @@
 </script>
 
 <section class="section-1">
-
 	<div class="bg-white shadow-md rounded container mx-auto p-8 mt-8">
 		<div class="w-full">
 			<div class="flex flex-row mt-2 py-3">
@@ -24,7 +23,7 @@
 				<div class="flex flex-col mb-2 ml-4 mt-1">
 					<div class="text-gray-600 text-sm font-semibold">${article.extra__writer}</div>
 					<div class="flex w-full mt-1">
-						<a href="?boardId=${param.boardId}" class="text-blue-700 font-base text-xs mr-1 cursor-pointer"> ${article.extra__boardName} </a router-link>
+						<a href="?boardId=${param.boardId}" class="text-blue-700 font-base text-xs mr-1 cursor-pointer"> ${article.extra__boardName} </router-link>
 						<div class="text-gray-400 font-thin text-xs">${article.regDate}</div>
 					</div>
 				</div>
