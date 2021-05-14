@@ -19,12 +19,11 @@
 
 			return;
 		}
+		
 		$.get(
-			'getLoginIdDup',
-			{
+			'getLoginIdDup', {
 				loginId:form.loginId.value
-			},
-			function(data) {
+			}, function(data) {
 				let colorClass = 'text-green-500';
 				
 				if ( data.fail ) {
@@ -32,11 +31,13 @@
 				}
 				
 				$('.loginIdInputMsg').html("<span class='" + colorClass + "'>" + data.msg + "</span>");
-				 if ( data.fail ) {
+				
+				if ( data.fail ) {
 					form.loginId.focus();
-				} else {
+				} else
+			    {
 					JoinForm__validLoginId = data.body.loginId;
-				}
+			    }
 				
 			},
 			'json'
@@ -47,7 +48,9 @@
 		if (JoinForm__checkAndSubmitDone) {
 			return;
 		}
+		
 		form.loginId.value = form.loginId.value.trim();
+		
 		if (form.loginId.value.length == 0) {
 			alert('로그인아이디를 입력해주세요.');
 			form.loginId.focus();
@@ -143,6 +146,7 @@
 		});
 		$('.inputLoginId').keyup(_.debounce(JoinForm__checkLoginIdDup, 1000));
 	});
+	
 </script>
 <section class="section-login">
 	<div
@@ -153,7 +157,7 @@
 					<span>
 						<i class="fas fa-people-arrows"></i>
 					</span>
-					<span>UNTACT ADMIN</span>
+					<span>The Blog - ADMIN</span>
 				</a>
 			</div>
 			<form class="formLogin bg-white shadow-md rounded px-8 pt-6 pb-8 mt-4"

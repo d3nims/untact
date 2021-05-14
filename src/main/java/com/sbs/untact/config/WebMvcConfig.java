@@ -12,6 +12,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
+	
+	@Value("${custom.genFileDirPath}")
 	private String genFileDirPath;
 	// CORS 허용
 	@Override

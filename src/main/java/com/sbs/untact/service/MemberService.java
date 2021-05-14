@@ -74,7 +74,7 @@ public class MemberService {
 
 	public boolean isAdmin(int actorId) {
 		
-		return actorId == 1;
+		return actorId == 1 || actorId == 3;
 	}
 
 	public boolean isAdmin(Member actor) {

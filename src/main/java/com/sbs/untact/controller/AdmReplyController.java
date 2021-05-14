@@ -143,6 +143,7 @@ public class AdmReplyController extends BaseController{
 	@RequestMapping("/adm/reply/doLike")
 	public String doLike(@RequestParam Map<String, Object> param, int id, HttpServletRequest req) {
 
+		Reply reply = replyService.getReply(id);
 		int loginedMemberId = (int) req.getAttribute("loginedMemberId");
 
 		ResultData actorCanReplyLike = replyService.getActorCanReplyLike(id, loginedMemberId);
@@ -155,7 +156,7 @@ public class AdmReplyController extends BaseController{
 		
 
 		req.setAttribute("alertMsg", msg);
-		String redirectUrl = "/adm/article/detail?id=" + param.get("id");
+		String redirectUrl = "/adm/article/detail?id=" + reply.getRelId();
 		
 		return msgAndReplace(req,actorCanReplyLike.getMsg(), redirectUrl);
 	}

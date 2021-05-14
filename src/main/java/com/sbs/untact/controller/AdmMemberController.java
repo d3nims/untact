@@ -58,7 +58,7 @@ public class AdmMemberController extends BaseController {
 			return new ResultData("F-1","로그인아이디는 영문과 숫자의 조합으로만 가능합니다.");
 		}
 
-		Member existingMember = memberService.getMemberByLoginId("loginId");
+		Member existingMember = memberService.getMemberByLoginId(loginId);
 
 		if (existingMember != null) {
 			return new ResultData("F-2",String.format("%s(은)는 이미 사용중인 아이디입니다.", loginId));
@@ -107,15 +107,17 @@ public class AdmMemberController extends BaseController {
 	@RequestMapping("/adm/member/doJoin")
 	@ResponseBody
 	public String doJoin(@RequestParam Map<String, Object> param) {
+		
 		if (param.get("loginId") == null) {
 			return Util.msgAndBack("loginId를 입력해주세요.");
 		}
-
-		Member existingMember = memberService.getMemberByLoginId((String)param.get("loginId"));
+		
+		Member existingMember = memberService.getMemberByLoginId((String) param.get("loginId"));
 
 		if (existingMember != null) {
 			return Util.msgAndBack("이미 사용중인 로그인아이디 입니다.");
 		}
+		
 
 		if (param.get("loginPw") == null) {
 			return Util.msgAndBack("loginPw를 입력해주세요.");
@@ -137,8 +139,9 @@ public class AdmMemberController extends BaseController {
 			return Util.msgAndBack("cellphoneNo를 입력해주세요.");
 		}
 
-		memberService.join(param);
 
+		memberService.join(param);
+		
 		String msg = String.format("%s님 환영합니다.", param.get("nickname"));
 
 		String redirectUrl = Util.ifEmpty((String)param.get("redirectUrl"), "../member/login");
